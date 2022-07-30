@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.costinyuan.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="转换函数conversion function没有返回类型的函数 operator type() const; 123456789101112class Fraction&amp;#123;public:  Fraction(int num, int den&#x3D;1)    : m_numerator(num), m_denominator(den) &amp;#123;&amp;#125;  operator double">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cpp函数编程">
+<meta property="og:url" content="https://www.costinyuan.com/2022/07/30/cpp%E5%87%BD%E6%95%B0%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:site_name" content="原子集">
+<meta property="og:description" content="转换函数conversion function没有返回类型的函数 operator type() const; 123456789101112class Fraction&amp;#123;public:  Fraction(int num, int den&#x3D;1)    : m_numerator(num), m_denominator(den) &amp;#123;&amp;#125;  operator double">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220725003539466.png">
+<meta property="og:image" content="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220725004621084.png">
+<meta property="og:image" content="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220728153843824.png">
+<meta property="og:image" content="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220728155934104.png">
+<meta property="og:image" content="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220728161443024.png">
+<meta property="og:image" content="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220729174109108.png">
+<meta property="og:image" content="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220729175358849.png">
+<meta property="og:image" content="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220729180403979.png">
+<meta property="article:published_time" content="2022-07-30T15:46:51.000Z">
+<meta property="article:modified_time" content="2022-07-30T15:47:20.882Z">
+<meta property="article:author" content="Costin Yuan">
+<meta property="article:tag" content="c++">
+<meta property="article:tag" content="侯捷">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220725003539466.png">
+
+
+<link rel="canonical" href="https://www.costinyuan.com/2022/07/30/cpp%E5%87%BD%E6%95%B0%E7%BC%96%E7%A8%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://www.costinyuan.com/2022/07/30/cpp%E5%87%BD%E6%95%B0%E7%BC%96%E7%A8%8B/","path":"2022/07/30/cpp函数编程/","title":"cpp函数编程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>cpp函数编程 | 原子集</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">原子集</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0conversion-function"><span class="nav-number">1.</span> <span class="nav-text">转换函数conversion function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#non-explicit-one-argument-ctor"><span class="nav-number">2.</span> <span class="nav-text">non-explicit-one-argument ctor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pointer-like-classes"><span class="nav-number">3.</span> <span class="nav-text">pointer-like classes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="nav-number">3.1.</span> <span class="nav-text">智能指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">3.2.</span> <span class="nav-text">迭代器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#function-like-classes%E4%BB%BF%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">function-like classes仿函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#namespace"><span class="nav-number">4.1.</span> <span class="nav-text">namespace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#function-template-%E5%87%BD%E6%95%B0%E6%A8%A1%E7%89%88"><span class="nav-number">4.2.</span> <span class="nav-text">function template 函数模版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#member-template-%E6%88%90%E5%91%98%E6%A8%A1%E7%89%88"><span class="nav-number">4.3.</span> <span class="nav-text">member template 成员模版</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88-shared-pointer"><span class="nav-number">4.3.1.</span> <span class="nav-text">智能指针 shared pointer</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#specialization-%E6%A8%A1%E7%89%88%E7%89%B9%E5%8C%96"><span class="nav-number">5.</span> <span class="nav-text">specialization 模版特化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#partial-specialization-%E5%81%8F%E7%89%B9%E5%8C%96"><span class="nav-number">5.1.</span> <span class="nav-text">partial specialization 偏特化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AA%E6%95%B0%E7%9A%84%E5%81%8F"><span class="nav-number">5.1.1.</span> <span class="nav-text">个数的偏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4%E7%9A%84%E5%81%8F"><span class="nav-number">5.1.2.</span> <span class="nav-text">范围的偏</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#template-template-parameter-%E6%A8%A1%E7%89%88%E6%A8%A1%E7%89%88%E5%8F%82%E6%95%B0"><span class="nav-number">5.2.</span> <span class="nav-text">template template parameter 模版模版参数</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Costin Yuan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.costinyuan.com/2022/07/30/cpp%E5%87%BD%E6%95%B0%E7%BC%96%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Costin Yuan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="原子集">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="cpp函数编程 | 原子集">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          cpp函数编程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-30 23:46:51 / 修改时间：23:47:20" itemprop="dateCreated datePublished" datetime="2022-07-30T23:46:51+08:00">2022-07-30</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="转换函数conversion-function"><a href="#转换函数conversion-function" class="headerlink" title="转换函数conversion function"></a>转换函数conversion function</h2><p>没有返回类型的函数</p>
+<p><code>operator type() const;</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Fraction</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">Fraction</span>(<span class="type">int</span> num, <span class="type">int</span> den=<span class="number">1</span>)</span><br><span class="line">    : <span class="built_in">m_numerator</span>(num), <span class="built_in">m_denominator</span>(den) &#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">operator</span> <span class="title">double</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="type">double</span>)(m_numerator / m_denominator);  <span class="comment">//</span></span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="type">int</span> m_numerator;  <span class="comment">// 分子</span></span><br><span class="line">  <span class="type">int</span> m_denominator;  <span class="comment">//分母</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="non-explicit-one-argument-ctor"><a href="#non-explicit-one-argument-ctor" class="headerlink" title="non-explicit-one-argument ctor"></a>non-explicit-one-argument ctor</h2><p>two parameters, one argument</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Fraction</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">Fraction</span>(<span class="type">int</span> num, <span class="type">int</span> den=<span class="number">1</span>)</span><br><span class="line">    : <span class="built_in">m_numerator</span>(num), <span class="built_in">m_denominator</span>(den) &#123;&#125;</span><br><span class="line">  Fraction <span class="keyword">operator</span>+(<span class="type">const</span> Fraction&amp; f) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Fraction</span>(...);</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="type">int</span> m_numerator;  <span class="comment">// 分子</span></span><br><span class="line">  <span class="type">int</span> m_denominator;  <span class="comment">//分母</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Fraction <span class="title">f</span><span class="params">(<span class="number">3</span>,<span class="number">5</span>)</span></span>;</span><br><span class="line">Fraction d2=f+<span class="number">4</span>;  <span class="comment">// 调用non-explicit ctor将4转化为Fraction，然后调用operator+</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><figcaption><span>double()```和```operator+```同时存在会报错ambiguous</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### explicit-one-argument ctor</span><br><span class="line"></span><br><span class="line">```cpp</span><br><span class="line">class Fraction</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">  explict Fraction(int num, int den=1)  //</span><br><span class="line">    : m_numerator(num), m_denominator(den) &#123;&#125;</span><br><span class="line">  operator double() const &#123;</span><br><span class="line">    return (double)(m_numerator / m_denominator);</span><br><span class="line">  &#125;</span><br><span class="line">  Fraction operator+(const Fraction&amp; f) &#123;</span><br><span class="line">    return Fraction(...);</span><br><span class="line">  &#125;</span><br><span class="line">private:</span><br><span class="line">  int m_numerator;  // 分子</span><br><span class="line">  int m_denominator;  //分母</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Fraction f(3,5);</span><br><span class="line">Fraction d2=f+4;  // [Error] conversion from &#x27;double&#x27; to &#x27;Fraction&#x27; require</span><br></pre></td></tr></table></figure>
+
+<h2 id="pointer-like-classes"><a href="#pointer-like-classes" class="headerlink" title="pointer-like classes"></a>pointer-like classes</h2><h3 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h3><p><img src="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220725003539466.png" alt="image-20220725003539466"></p>
+<h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><p><img src="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220725004621084.png" alt="image-20220725004621084"></p>
+<h2 id="function-like-classes仿函数"><a href="#function-like-classes仿函数" class="headerlink" title="function-like classes仿函数"></a>function-like classes仿函数</h2><p>特点：重载 <code>()</code> 符号</p>
+<p><img src="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220728153843824.png" alt="image-20220728153843824"></p>
+<h3 id="namespace"><a href="#namespace" class="headerlink" title="namespace"></a>namespace</h3><p><img src="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220728155934104.png" alt="image-20220728155934104"></p>
+<h3 id="function-template-函数模版"><a href="#function-template-函数模版" class="headerlink" title="function template 函数模版"></a>function template 函数模版</h3><p><img src="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220728161443024.png" alt="image-20220728161443024"></p>
+<h3 id="member-template-成员模版"><a href="#member-template-成员模版" class="headerlink" title="member template 成员模版"></a>member template 成员模版</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T1</span>, <span class="keyword">class</span> <span class="title class_">T2</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">pair</span> &#123;</span><br><span class="line">  <span class="keyword">typedef</span> T1 first_type;</span><br><span class="line">  <span class="keyword">typedef</span> T2 second_type;</span><br><span class="line">  </span><br><span class="line">  T1 first;</span><br><span class="line">  T2 second;</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">pair</span>()</span><br><span class="line">    : <span class="built_in">first</span>(<span class="built_in">T1</span>()), <span class="built_in">second</span>(<span class="built_in">T2</span>()) &#123;&#125;</span><br><span class="line">  <span class="built_in">pair</span>(<span class="type">const</span> T1&amp; a, <span class="type">const</span> T2&amp; b)</span><br><span class="line">    :<span class="built_in">first</span>(a), <span class="built_in">second</span>(b) &#123;&#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">U1</span>, <span class="keyword">class</span> <span class="title class_">U2</span>&gt;</span><br><span class="line">  <span class="built_in">pair</span>(<span class="type">const</span> pair&lt;U1, U2&gt;&amp; p)</span><br><span class="line">    : <span class="built_in">first</span>(p.first), <span class="built_in">second</span>(p.second) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用在继承类中，U1::T1 &amp;&amp; U2::T2</p>
+<h4 id="智能指针-shared-pointer"><a href="#智能指针-shared-pointer" class="headerlink" title="智能指针 shared pointer"></a>智能指针 shared pointer</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">shared_ptr</span>:public__shared_ptr&lt;_Tp&gt;</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">    <span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp1&gt;</span></span><br><span class="line"><span class="function">    <span class="keyword">explicit</span> <span class="title">shared_ptr</span><span class="params">(_Tp1* __p)</span></span></span><br><span class="line"><span class="function">    :__shared_ptr&lt;_Tp&gt;(__p)&#123;</span>&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Basel* ptr = <span class="keyword">new</span> Derived1;  <span class="comment">// up-cast</span></span><br><span class="line"><span class="function">shared_ptr&lt;Basel&gt; <span class="title">sptr</span><span class="params">(<span class="keyword">new</span> Derived1)</span></span>;  <span class="comment">// 模拟up-cast</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="specialization-模版特化"><a href="#specialization-模版特化" class="headerlink" title="specialization 模版特化"></a>specialization 模版特化</h2><p><img src="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220729174109108.png" alt="image-20220729174109108"></p>
+<blockquote>
+<p>泛化</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">Key</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">hash</span> &#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="partial-specialization-偏特化"><a href="#partial-specialization-偏特化" class="headerlink" title="partial specialization 偏特化"></a>partial specialization 偏特化</h3><h4 id="个数的偏"><a href="#个数的偏" class="headerlink" title="个数的偏"></a>个数的偏</h4><p>确定了部分参数类型，如T需要是BOOLEAN类型</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Alloc=...&gt;</span><br><span class="line"><span class="keyword">class</span> vector&lt;<span class="type">bool</span>, Alloc&gt;</span><br><span class="line">&#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="范围的偏"><a href="#范围的偏" class="headerlink" title="范围的偏"></a>范围的偏</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span>&lt;U*&gt;</span><br><span class="line">&#123;&#125;;</span><br><span class="line"></span><br><span class="line">C&lt;string*&gt; obj;  <span class="comment">// 需要是指针</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="template-template-parameter-模版模版参数"><a href="#template-template-parameter-模版模版参数" class="headerlink" title="template template parameter 模版模版参数"></a>template template parameter 模版模版参数</h3><p>指定任意的容器？ </p>
+<p><img src="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220729175358849.png" alt="image-20220729175358849"></p>
+<p>修改为只能指针后可以使用第一参数作class的T</p>
+<p><img src="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220729180403979.png" alt="image-20220729180403979"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/%E4%BE%AF%E6%8D%B7/" rel="tag"># 侯捷</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/23/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-4/" rel="prev" title="c++面向对象-4-继承、复合、委托">
+                  <i class="fa fa-chevron-left"></i> c++面向对象-4-继承、复合、委托
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Costin Yuan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
