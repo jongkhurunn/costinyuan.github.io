@@ -97,8 +97,13 @@
       </tags>
   </entry>
   <entry>
+    <title>数学建模基础知识</title>
+    <url>/2022/10/04/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>cpp函数编程</title>
-    <url>/2022/07/30/cpp%E5%87%BD%E6%95%B0%E7%BC%96%E7%A8%8B/</url>
+    <url>/2022/07/30/cpp%E9%AB%98%E7%BA%A7%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/cpp%E5%87%BD%E6%95%B0%E7%BC%96%E7%A8%8B/</url>
     <content><![CDATA[<h2 id="转换函数conversion-function"><a href="#转换函数conversion-function" class="headerlink" title="转换函数conversion function"></a>转换函数conversion function</h2><p>没有返回类型的函数</p>
 <p><code>operator type() const;</code></p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Fraction</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">Fraction</span>(<span class="type">int</span> num, <span class="type">int</span> den=<span class="number">1</span>)</span><br><span class="line">    : <span class="built_in">m_numerator</span>(num), <span class="built_in">m_denominator</span>(den) &#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">operator</span> <span class="title">double</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="type">double</span>)(m_numerator / m_denominator);  <span class="comment">//</span></span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="type">int</span> m_numerator;  <span class="comment">// 分子</span></span><br><span class="line">  <span class="type">int</span> m_denominator;  <span class="comment">//分母</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -244,7 +249,7 @@
   </entry>
   <entry>
     <title>c++面向对象-1-complex类</title>
-    <url>/2022/07/21/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-1/</url>
+    <url>/2022/07/21/cpp%E9%AB%98%E7%BA%A7%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-1/</url>
     <content><![CDATA[<h4 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream.h&gt;   标准库</span><br><span class="line">#include &quot;complex.h&quot;    自定义头文件</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -325,7 +330,7 @@
   </entry>
   <entry>
     <title>c++面向对象-2-String类</title>
-    <url>/2022/07/21/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-2/</url>
+    <url>/2022/07/21/cpp%E9%AB%98%E7%BA%A7%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-2/</url>
     <content><![CDATA[<h4 id="防卫式写法模版"><a href="#防卫式写法模版" class="headerlink" title="防卫式写法模版"></a>防卫式写法模版</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __MYSTRING__</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __MYSTRING__</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">String</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">String</span>(<span class="type">const</span> <span class="type">char</span>* cstr = <span class="number">0</span>);</span><br><span class="line">  <span class="built_in">String</span>(<span class="type">const</span> String&amp; str);</span><br><span class="line">  String&amp; <span class="keyword">operator</span>=(<span class="type">const</span> String&amp; str);</span><br><span class="line">  ~<span class="built_in">String</span>();</span><br><span class="line">  <span class="function"><span class="type">char</span>* <span class="title">get_c_str</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> m_data; &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="type">char</span>* m_data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">String::<span class="built_in">function</span>(...) ...</span><br><span class="line"></span><br><span class="line">Global-<span class="built_in">function</span>(...) ...</span><br><span class="line">  </span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
 
 <h4 id="构造函数-amp-析构函数"><a href="#构造函数-amp-析构函数" class="headerlink" title="构造函数 &amp; 析构函数"></a>构造函数 &amp; 析构函数</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">String</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">String</span>(<span class="type">const</span> <span class="type">char</span>* cstr = <span class="number">0</span>);</span><br><span class="line">  ~<span class="built_in">String</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span></span></span><br><span class="line"><span class="function"><span class="title">String::String</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* cstr = <span class="number">0</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (cstr) &#123;</span><br><span class="line">    m_data = <span class="keyword">new</span> <span class="type">char</span>[<span class="built_in">strlen</span>(cstr)+<span class="number">1</span>];</span><br><span class="line">    <span class="built_in">strcpy</span>(m_data, cstr);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    m_data = <span class="keyword">new</span> <span class="type">char</span>[<span class="number">1</span>];</span><br><span class="line">    *m_data = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">inline</span></span><br><span class="line">String::~<span class="built_in">String</span>()</span><br><span class="line">&#123;</span><br><span class="line">  deleta[] m_data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -368,7 +373,7 @@
   </entry>
   <entry>
     <title>c++面向对象-3-static、template、namespace</title>
-    <url>/2022/07/22/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-3/</url>
+    <url>/2022/07/22/cpp%E9%AB%98%E7%BA%A7%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-3/</url>
     <content><![CDATA[<h2 id="static"><a href="#static" class="headerlink" title="static"></a>static</h2><p><img src="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220720235234099.png" alt="image-20220720235234099"></p>
 <ul>
 <li><p>成员函数依靠 this point 传递数据</p>
@@ -414,7 +419,7 @@
   </entry>
   <entry>
     <title>c++面向对象-4-继承、复合、委托</title>
-    <url>/2022/07/23/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-4/</url>
+    <url>/2022/07/23/cpp%E9%AB%98%E7%BA%A7%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-4/</url>
     <content><![CDATA[<h2 id="Composition复合"><a href="#Composition复合" class="headerlink" title="Composition复合"></a>Composition复合</h2><p>表示 has-a</p>
 <img src="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220721235355853.png" alt="image-20220721235355853" style="zoom:50%;" />
 
@@ -476,10 +481,5 @@
         <tag>OOP</tag>
         <tag>C++</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>数学建模基础知识</title>
-    <url>/2022/10/04/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
-    <content><![CDATA[]]></content>
   </entry>
 </search>

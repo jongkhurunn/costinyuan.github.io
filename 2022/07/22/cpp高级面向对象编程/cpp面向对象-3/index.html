@@ -24,7 +24,7 @@
     <meta name="description" content="static  成员函数依靠 this point 传递数据  黄色部分可写可不写   静态数据使用场景：银行用户类里的利率 静态函数使用场景：处理静态数据（没有 this point） 1234567891011121314class Account &amp;#123;public:  static double m_rate;  static void set_rate(const double&amp;a">
 <meta property="og:type" content="article">
 <meta property="og:title" content="c++面向对象-3-static、template、namespace">
-<meta property="og:url" content="https://www.costinyuan.com/2022/07/22/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-3/index.html">
+<meta property="og:url" content="https://www.costinyuan.com/2022/07/22/cpp%E9%AB%98%E7%BA%A7%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-3/index.html">
 <meta property="og:site_name" content="原子集">
 <meta property="og:description" content="static  成员函数依靠 this point 传递数据  黄色部分可写可不写   静态数据使用场景：银行用户类里的利率 静态函数使用场景：处理静态数据（没有 this point） 1234567891011121314class Account &amp;#123;public:  static double m_rate;  static void set_rate(const double&amp;a">
 <meta property="og:locale" content="zh_CN">
@@ -40,11 +40,11 @@
 <meta name="twitter:image" content="https://picb.oss-cn-beijing.aliyuncs.com/img/image-20220720235234099.png">
 
 
-<link rel="canonical" href="https://www.costinyuan.com/2022/07/22/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-3/">
+<link rel="canonical" href="https://www.costinyuan.com/2022/07/22/cpp%E9%AB%98%E7%BA%A7%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-3/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://www.costinyuan.com/2022/07/22/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-3/","path":"2022/07/22/cpp面向对象-3/","title":"c++面向对象-3-static、template、namespace"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://www.costinyuan.com/2022/07/22/cpp%E9%AB%98%E7%BA%A7%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-3/","path":"2022/07/22/cpp高级面向对象编程/cpp面向对象-3/","title":"c++面向对象-3-static、template、namespace"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>c++面向对象-3-static、template、namespace | 原子集</title>
@@ -204,7 +204,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.costinyuan.com/2022/07/22/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-3/">
+    <link itemprop="mainEntityOfPage" href="https://www.costinyuan.com/2022/07/22/cpp%E9%AB%98%E7%BA%A7%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -307,12 +307,12 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/07/21/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-2/" rel="prev" title="c++面向对象-2-String类">
+                <a href="/2022/07/21/cpp%E9%AB%98%E7%BA%A7%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-2/" rel="prev" title="c++面向对象-2-String类">
                   <i class="fa fa-chevron-left"></i> c++面向对象-2-String类
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/07/23/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-4/" rel="next" title="c++面向对象-4-继承、复合、委托">
+                <a href="/2022/07/23/cpp%E9%AB%98%E7%BA%A7%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/cpp%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-4/" rel="next" title="c++面向对象-4-继承、复合、委托">
                   c++面向对象-4-继承、复合、委托 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
