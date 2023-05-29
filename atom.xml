@@ -1,0 +1,1577 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[原子集]]></title>
+  <link href="https://costinyuan.com/atom.xml" rel="self"/>
+  <link href="https://costinyuan.com/"/>
+  <updated>2023-05-30T01:12:49+08:00</updated>
+  <id>https://costinyuan.com/</id>
+  <author>
+    <name><![CDATA[]]></name>
+    
+  </author>
+  <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[Sahak et al. - 2023 - Denoising Diffusion Probabilistic Models for Robust Image Super-Resolution in the Wild]]></title>
+    <link href="https://costinyuan.com/16853785395706.html"/>
+    <updated>2023-05-30T00:42:19+08:00</updated>
+    <id>https://costinyuan.com/16853785395706.html</id>
+    <content type="html"><![CDATA[
+<h1><a id="about" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h1>
+<h3><a id="%E6%A0%87%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>标题</h3>
+<p>Denoising Diffusion Probabilistic Models for Robust Image Super-Resolution in the Wild</p>
+<p>野外鲁棒图像超分辨率的去噪扩散概率模型</p>
+<h3><a id="%E4%BD%9C%E8%80%85%E5%9B%A2%E9%98%9F" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>作者团队</h3>
+<p>Hshmat Sahak（学生）、 Daniel Watson、 Chitwan Saharia、 David Fleet</p>
+<p>谷歌研究院、多伦多大学</p>
+<h3><a id="%E5%8F%91%E8%A1%A8%E6%9C%9F%E5%88%8A" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>发表期刊</h3>
+<p>2023CVPR</p>
+<h1><a id="content" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Content</h1>
+<h3><a id="%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>效果展示</h3>
+<p><img src="media/16853785395706/16853787996565.png" alt="" /></p>
+<p><img src="media/16853785395706/16853787996604.png" alt="" /></p>
+<p><img src="media/16853785395706/16853787996656.png" alt="" /></p>
+<h3><a id="%E9%97%AE%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>问题</h3>
+<p>扩散模型在单张图像和图像-图像的超分上取得了很好的成绩，但是在盲超分（blind super-resolution，输入的图像是分布外的/泛化的/OOD, 未知退化的）上还是不如GAN。</p>
+<h3><a id="%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>相关工作</h3>
+<p>盲超分辨率：</p>
+<p>a) 显式退化模型：训练时使用退化参数（图像处理方法是 模糊+下采样+图像增强如 JPEG 压缩）</p>
+<p>b) 隐式退化模型：需要学习退化过程，需要大型数据集才有好的繁华能力</p>
+<p>c) 除了GAN外还有很多非生成方法，如CNN、对比学习、注意力机制。</p>
+<p>还可以知道</p>
+<ol>
+<li>使用简单的卷积结构是因为全卷积模型可以更好的泛化到未见过的分辨率（注意力机制虽然对图像质量有积极影响，但是会使对不同横纵比图像的泛化能力变差）</li>
+<li>图像条件扩散模型比回归模型具有同事产生清晰和多样化样本的优势，而GAN因为经常崩溃而多样性优势不及扩散模型</li>
+</ol>
+<h3><a id="%E6%96%B9%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>方法</h3>
+<p>提出了SR3+：结合了 <code>简单的卷积结构</code> 和 <code>具有两个关键创新的训练过程</code> 的灵活且鲁棒的扩散超分模型</p>
+<p>简单的卷积结构是指 U-Net 结构</p>
+<p>两个训练过程的关键创新是指：</p>
+<ul>
+<li>参数退化（Parameterized degradation）：包括图像模糊（高斯、Kernel、Sinc）、加噪、JEPG压缩和下采样</li>
+<li>噪声调节增强（noise conditioning augmentation）</li>
+</ul>
+<h4><a id="%E7%BD%91%E8%B7%AF%E7%BB%93%E6%9E%84" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>网路结构</h4>
+<p><img src="media/16853785395706/16853787996724.png" alt="" /></p>
+<p>（低分图像x插值到高分大小和退化过的图像拼接作为输入)</p>
+<h4><a id="hr-lr%E9%80%80%E5%8C%96%E6%B5%81%E7%A8%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>HR-LR退化流程</h4>
+<p><img src="media/16853785395706/16853787996784.png" alt="" /></p>
+<p>（图中蓝色部分是参数退化过程，黄色是噪音条件增强过程）</p>
+<p>有研究指出，重复的参数退化组合（higher-order deformations）使用效果更佳；消融实验表明，在噪音条件增强阶段进行加噪比在参数退化组合中加噪效果好</p>
+<p>调节噪音水平超参可以产生逼真的纹理和视觉细节</p>
+<h3><a id="%E5%AE%9E%E9%AA%8C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>实验</h3>
+<p>固定放大倍数为4x（64x64 -&gt; 256x256），通过多个消融实验来确定最佳的图像增强方式、模型大小和数据集大小</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Caron et al. - 2021 - Emerging Properties in Self-Supervised Vision Transformers]]></title>
+    <link href="https://costinyuan.com/16719775093201.html"/>
+    <updated>2022-12-25T22:11:49+08:00</updated>
+    <id>https://costinyuan.com/16719775093201.html</id>
+    <content type="html"><![CDATA[
+<h2><a id="about" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h2>
+<h3><a id="%E6%A0%87%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>标题</h3>
+<p>Emerging Properties in Self-Supervised Vision Transformers</p>
+<p>自监督Transformer中的新特性</p>
+<h3><a id="%E5%8F%91%E8%A1%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>发表</h3>
+<p>2021年ICCV会议</p>
+<h3><a id="%E4%BD%9C%E8%80%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>作者</h3>
+<p>Mathilde Caron （Facebook AI Research / 法国国家信息与自动化研究所 ）</p>
+<p>Hugo Touvron （Facebook AI Research / 法国索邦大学）</p>
+<p>等</p>
+<h3><a id="%E5%85%B3%E6%B3%A8%E7%82%B9" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>关注点</h3>
+<p>Transformer、动量移动、知识蒸馏、自监督学习、语义分割</p>
+<h2><a id="content" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Content</h2>
+<h3><a id="%E6%8F%90%E5%87%BA%E9%97%AE%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>提出问题</h3>
+<p>自监督用在vision transformer 上会不会产生一些有意思的性质</p>
+<h3><a id="%E5%8A%A8%E6%9C%BA" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>动机</h3>
+<p>探究自监督在 Vision Transformers下的新特性</p>
+<p>如何利用自监督进一步发挥 Transformers的性能</p>
+<h3><a id="dino%E7%BD%91%E7%BB%9C%E8%AE%BE%E8%AE%A1" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>DINO网络设计</h3>
+<p><img src="media/16719775093201/16852947670344.jpg" alt="16852892866491" /></p>
+<ul>
+<li>图像裁剪&amp;数据增强：x1(全局随机裁剪) , x2 (全局随机裁剪+局部随机裁剪)</li>
+<li>知识蒸馏：teacher网络和student同结构，student网络通过梯度下降改变参数，teacher网络没有先验权重，而是根据student网络的参数进行滑动平均(exponential moving average, ema)改变参数。</li>
+<li>centering模块计算机teacher输出的中心特征</li>
+<li>得到K维概率分布p1,p2。收敛损失以将p1 macth p2</li>
+</ul>
+<h3><a id="%E7%BB%93%E8%AE%BA" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>结论</h3>
+<ol>
+<li>
+<p>自监督ViT features 中包含清晰的图像语义分割信息，而这在有监督ViT和convnets没有类似的表现</p>
+<p><img src="media/16719775093201/16852947670381.png" alt="image-20221225220912895" /></p>
+<p><img src="media/16719775093201/16852947670433.png" alt="image-20221225220931139" /></p>
+</li>
+<li>
+<p>基于小ViT模型产出的features，在K-NN分类器中达到78.1% top-1 （Image-Net）</p>
+</li>
+<li>
+<p>momentum encoder，multi-crop augmentation. 和smaller patches with ViTs 有重要的作用</p>
+</li>
+</ol>
+<h3><a id="%E6%83%B3%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>想法</h3>
+<p>根据SSL在ViT上的特性做语意分割</p>
+<p>Discovering Object Masks with Transformers for Unsupervised Semantic Segmentation</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[常用Git命令]]></title>
+    <link href="https://costinyuan.com/16678812997421.html"/>
+    <updated>2022-11-08T12:21:39+08:00</updated>
+    <id>https://costinyuan.com/16678812997421.html</id>
+    <content type="html"><![CDATA[
+<ol>
+<li><code>git pull origin master(main)</code> 将远端修改过的代码再更新到本地</li>
+<li><code>git pull &lt;RemoteHostName&gt; &lt;RemoteBranchName&gt;</code>：同上，不过改成从远程主机下载远程分支并与本地同名分支合并。</li>
+<li><code>git checkout main</code> 切换回main分支。<code>git checkout xxx</code> 回到xxx分支</li>
+<li><code>git checkout -b xxx</code>：git checkout xxx是指切换到xxx 相当于复制了remote的仓库到本地的xxx分支上，-b意味着branch，即创建新分支，这条指令合起来意思是创建并切换到xxx。</li>
+<li><code>git diff</code> 查看自己对代码做出的改变，也就是查看暂存区与disk区文件的差异。</li>
+<li><code>git add xxx</code>：将xxx文件添加到暂存区。</li>
+<li><code>git commit</code>：将暂存区内容添加到local区的当前分支中。</li>
+<li><code>git push &lt;RemoteHostName&gt; &lt;LocalBranchName&gt;</code>：将local区的LocalBranchName分支推送到RemoteHostName主机的同名分支。（若加-f表示无视本地与远程分支的差异强行push）</li>
+<li><code>git branch -d &lt;branchName&gt;</code>:删除一个名字为branchName的分支。如果该分支有提交未进行合并，则会删除失败。</li>
+<li><code>git branch -D &lt;branchName&gt;</code>:强制删除一个名字为branchName 的分支。如果该分支有提交未进行合并，也会删除成功。</li>
+<li><code>git rebase xxx</code>：假设当前分支与xxx分支存在共同部分common，该指令用xxx分支包括common在内的整体替换当前分支的common部分（原先xxx分支内容为common-&gt;diversityA，当前分支内容为common-&gt;diversityB，执行完该指令后当前分支内容为common-&gt;diversityA-&gt;diversityB）。<br />
+以下5条命令适用于在写自己的代码过程中发现远端GitHub上代码出现改变的情况，这个时候你可以按照下面这种方式来进行代码推送和合并。</li>
+<li><code>git rebase main</code> 我在xxx分支上，先把main移过来，然后根据我的commit来修改成新的内容（中途可能会出现，rebase conflict 手动选择保留哪段代码）</li>
+<li><code>git push -f origin xxx</code> 把rebase后并且更新过的代码再push到远端github上 （-f 强行）</li>
+<li><code>git stash save 'xxxx'</code>: 将当前分支改变的内容存入存储并标记。<code>git stash list</code>: 查看储存记录列表。<code>git stash apply stash@{index}</code>恢复之前存储的内容。<code>git stash pop</code>: 取出最近一次存储并删除</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[按名字分类脚本]]></title>
+    <link href="https://costinyuan.com/16673702210554.html"/>
+    <updated>2022-11-02T14:23:41+08:00</updated>
+    <id>https://costinyuan.com/16673702210554.html</id>
+    <content type="html"><![CDATA[
+<h2><a id="%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>目录结构</h2>
+<pre><code class="language-bash">|--平时作业（按学生姓名分类）.zip
+|     |--distribution.sh
+|     |--作业
+|     |     |--数据结构-0003-作业1(word)
+|     |     |     ｜--学院-专业-班级-学号-AAA.doc
+|     |     |     ｜--学院-专业-班级-学号-BBB.doc
+|     |     |     ｜--学院-专业-班级-学号-CCC.doc
+|     |     |--数据结构-0003-作业2(word)
+|     |     |--数据结构-0003-作业3(word)
+|     |--平时作业
+|     |     |--AAA
+|     |     |     ｜--1 学院-专业-班级-学号-AAA.doc
+|     |     |     ｜--2 学院-专业-班级-学号-AAA.doc
+|     |     |     ｜--2 学院-专业-班级-学号-AAA.doc
+|     |     |--BBB
+|     |     |--CCC
+</code></pre>
+<p><img src="media/16673702210554/16673702572930.jpg" alt="16673702572930" /></p>
+<h2><a id="%E8%A6%81%E6%B1%82" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>要求</h2>
+<p>把作业中按作业次数提交的doc文件，按学生姓名重新分放</p>
+<h2><a id="%E8%84%9A%E6%9C%AC" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>脚本</h2>
+<pre><code class="language-bash">#!/bin/bash
+
+LOG_FILE=./log.txt
+
+function log()
+{
+   content=&quot;$(date '+%Y-%m-%d %H:%M:%S') $@&quot;
+   echo $content &gt;&gt; $LOG_FILE
+}
+
+# 日志函数
+################################################
+
+# 使用方法
+# 更改运行权限 chmod 777 distribution.sh
+# ./distribution.sh 作业 平时作业
+
+sourcePatch=$1
+
+desPath=$2
+
+for dirname in `ls $desPath`; do
+
+  echo ${dirname}  # 获取学生姓名
+
+  for file in $(find $sourcePatch -name &quot;*${dirname}.doc&quot; -type f); do
+
+    echo $file  # 获取同名学生文件路径
+
+    cnt=${file: 15:1}  # 获取作业次数
+
+    # echo $cnt $(basename $file)
+
+    cp &quot;$file&quot; &quot;$desPath/$dirname/$cnt $(basename $file)&quot;
+
+  done
+
+done
+</code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RS推荐系统相关理论与研究]]></title>
+    <link href="https://costinyuan.com/16666038374490.html"/>
+    <updated>2022-10-24T17:30:37+08:00</updated>
+    <id>https://costinyuan.com/16666038374490.html</id>
+    <content type="html"><![CDATA[
+<h2><a id="%E4%BC%A0%E7%BB%9F%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>传统推荐系统</h2>
+<h3><a id="%E7%90%86%E8%A7%A3" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>理解</h3>
+<p>一个是<strong>决策过程</strong>：例如娱乐、电子商务、社交网络</p>
+<p>一个是<strong>信息过滤</strong>系统：试图使用基于用户和物品关系的信息过滤技术来解决信息过载问题</p>
+<h3><a id="%E5%88%86%E7%B1%BB" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>分类</h3>
+<p>根据（使用的信息）和（提供的推荐类型）：</p>
+<ol>
+<li>
+<p>协同过滤 Collaborative Filtering, CF</p>
+</li>
+<li>
+<p>基于内容 Content-based, CB</p>
+</li>
+<li>
+<p>混合推荐</p>
+</li>
+</ol>
+<h3><a id="%E5%8D%8F%E5%90%8C%E8%BF%87%E6%BB%A4" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>协同过滤</h3>
+<blockquote>
+<p>CF是使用最广泛的推荐推荐系统方法之一</p>
+</blockquote>
+<p>概念：由几个<strong>相关</strong>用户提供的评分的写作能力来进行推荐，即利用 用户间、物品间的关系 来生成推荐列表，有基于内存的方法和基于模型的方法</p>
+<p>问题：费时（需要扫描M用户N商品）</p>
+<p>解决方法：(1) 随机抽样或丢弃M/N  （2） 按分类划分空间 （3）聚类或PCA降维</p>
+<p>新的问题：丢失的数据会降低推荐质量</p>
+<p>缺点：（1）冷启动问题 （2）数据稀疏 （3）可拓展性</p>
+<h3><a id="%E5%9F%BA%E4%BA%8E%E5%86%85%E5%AE%B9%E6%8E%A8%E8%8D%90%E6%8A%80%E6%9C%AF" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>基于内容推荐技术</h3>
+<p>概念：CB过滤技术以来用户/物品描述来进行推荐（基于<strong>历史</strong>记录与候选库比较）</p>
+<p>优点：（1）独立性 （2）透明度 （3）不影响新物品的推荐</p>
+<p>缺点：（1）对未触及的标签无法建议 （2）没有记录的用户无法推荐</p>
+<h3><a id="%E6%B7%B7%E5%90%88%E6%8E%A8%E8%8D%90%E6%96%B9%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>混合推荐方法</h3>
+<p>利用两种或多种推荐系统（如CF和CB）的组合来生成增强推荐</p>
+<p>实现方式：特征组合、特征增强、级联和切换</p>
+<h2><a id="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>深度学习框架</h2>
+<p>在推荐系统中会话以及点击日志的顺序结构是非常适合由递归/卷积模型提供的归纳偏差，优势在于处理<strong>基于内容</strong>的推荐和<strong>多模态</strong>（传统方法所不具备的）</p>
+<h3><a id="%E4%B8%AA%E6%80%A7%E5%8C%96%E6%8E%A8%E8%8D%90%E5%8F%91%E5%B1%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>个性化推荐发展</h3>
+<ol>
+<li>大量费时预处理（如关键子提取、主题建模）</li>
+<li>自动从端对端学习和提取文本有用信息</li>
+</ol>
+<h3><a id="%E6%B6%89%E5%8F%8A%E6%8A%80%E6%9C%AF" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>涉及技术</h3>
+<ol>
+<li>有监督/无监督提取特征</li>
+<li>文本、视频、音频、图像特征处理</li>
+<li>序列建模：RNN内部记忆、CNN时间滑动过滤器</li>
+</ol>
+<h2><a id="%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考文献</h2>
+<p>【博士论文】基于深度学习的个性化推荐方法研究_刘太亨</p>
+<h2><a id="%E5%BE%85%E7%9C%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>待看</h2>
+<p>【博士论文】基于图表示学习的深度推荐系统研究_马心陶（CF）</p>
+<p>【博士论文】基于用户行为序列挖掘的个性化推荐方法研究_刘丰（CB）</p>
+<p>【博士论文】基于元学习知识重用和泛化能力的算法研究_许辉</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Chen et al. - 2019 - POG Personalized Outfit Generation for Fashion Recommendation at Alibaba iFashion]]></title>
+    <link href="https://costinyuan.com/16657630522730.html"/>
+    <updated>2022-10-14T23:57:32+08:00</updated>
+    <id>https://costinyuan.com/16657630522730.html</id>
+    <content type="html"><![CDATA[
+<h2><a id="about" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h2>
+<h3><a id="%E6%A0%87%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>标题</h3>
+<p>POG: Personalized Outfit Generation for Fashion Recommendation at Alibaba iFashion</p>
+<p>POG: 阿里巴巴iFashion所用的利用生成个人穿搭的时尚推荐</p>
+<h3><a id="%E5%8F%91%E8%A1%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>发表</h3>
+<p>KDD 2019</p>
+<h3><a id="%E5%9B%A2%E9%98%9F" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>团队</h3>
+<p>阿里巴巴集团</p>
+<h3><a id="%E6%95%B0%E6%8D%AE%E9%9B%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>数据集</h3>
+<p>a large-scale dataset consisting of 1.01 million outfits with rich context information, and 0.28 billion user click actions from 3.57 million users.</p>
+<p><a href="https://github.com/wenyuer/POG">https://github.com/wenyuer/POG</a></p>
+<h2><a id="content" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Content</h2>
+<h3><a id="fashion-outfit-recommendation" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fashion Outfit Recommendation</h3>
+<ol>
+<li>早期工作主要是利用collaborative filtering来根据用户的历史行为模型用户偏好，缺点是倾向于对单品的推荐</li>
+<li>有基于场景的全套服装推荐</li>
+<li>有基于图像或关键字的全套服装推荐</li>
+<li>a functional tensor factorization approach，但是需要用户个人信息</li>
+</ol>
+<p>主要是都不适合大型在线系统的推荐</p>
+<h3><a id="%E6%8F%90%E5%87%BA%E9%97%AE%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>提出问题</h3>
+<p>日益增长的向上购物环境中，服装搭配所体现的问题：</p>
+<ol>
+<li>时尚元素的搭配 the <em><strong>Compatibility</strong></em> of the generated fashion outfits</li>
+<li>个性 the <em><strong>Personalization</strong></em> in the recommendation process</li>
+</ol>
+<h3><a id="%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>解决方案</h3>
+<p>由于发现大家对单品和穿搭的品味相似，所以提出了一个基于Transformer结构的Personalized Outfit Generation (POG) model来链接用户对单品和搭配的喜好</p>
+<p><img src="media/16657630522730/16852947556823.png" alt="image-20221014232710972" /></p>
+<p><img src="media/16657630522730/16852947556847.png" alt="image-20221014232752747" /></p>
+<p>POG通过捕捉用户的兴趣和品味来生成个人穿搭推荐</p>
+<ol>
+<li>
+<p>对于 <em>Compatibility</em></p>
+<p>Fashion Outfit Model (FOM) 学习搭配内不同时尚元素的匹配度，不同单品需要加权计算</p>
+<p>设计了一个基于自注意力机制的mask-prediction任务，遮挡某一单品，然后猜这个单品是什么</p>
+</li>
+<li>
+<p>对于 <em>Personalization</em></p>
+<p>整合用户偏好进预训练的FOM提出了Personalized Outfit Generation (POG) model，用来生成既有穿搭感又有个人品味的搭配</p>
+<p>POG是基于Transformer编解码器结构的，同时输入【用户偏好】和【搭配匹配度】信息</p>
+</li>
+</ol>
+<h3><a id="pog" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>POG</h3>
+<p>三阶段：（1）嵌入时尚元素 （2）建立FOM （3）利用训练好的FOM初始化POG</p>
+<h4><a id="multi-modal-embedding" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Multi-modal Embedding</h4>
+<p>过去的工作大多都是利用图像和文字进行多模态嵌入</p>
+<ol>
+<li>ResNet v2模型编码的1536维 <em>白色背景图像稠密向量</em></li>
+<li>具有从title中识别category的预训练TextCNN编码的300维 <em>时尚元素稠密向量</em></li>
+<li>阿里巴巴自研的Behemoth Graph Embedding平台编码的160维 <em>collaborative filtering signal for the item dense vector</em> ：该平台根据淘宝移动应用中记录的用户点击会话中物品的共同发生率</li>
+</ol>
+<p>把上面三个向量合起来生成128维的向量，利用强化学习构造特征空间</p>
+<p><img src="media/16657630522730/16852947556882.png" alt="image-20221015151033487" /></p>
+<h4><a id="fashion-outfit-model" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fashion Outfit Model</h4>
+<blockquote>
+<p>在进行outfit的特征描述时应该对不同item的权重进行调整</p>
+</blockquote>
+<p>在FOM中设计掩码去预测掩码部分</p>
+<ol start="0">
+<li>
+<p>没有使用位置编码：因为是从一组服装搭配中进行学习，而不是一个图像序列</p>
+</li>
+<li>
+<p>首先把 \(F_{mask}\) （mask item + other items）输入两个ReLU层（长方形），让所有输入转化为和Multi-modal Embedding中所说的outfit特征空间向量（椭圆形）</p>
+<p><img src="media/16657630522730/16852947556918.png" alt="image-20221017192413262" /></p>
+</li>
+<li>
+<p>再经过Transformer encoder = ((Multi-Head self-attention + Position-wise Feed-Forward Network) + Layer Normalization) * \(l\) 得到 \(g_{mask}\)</p>
+<p><img src="media/16657630522730/16852947556966.png" alt="image-20221017191521677" /></p>
+</li>
+</ol>
+<p><strong>Personalized Outfit Generation Model</strong></p>
+<p><img src="media/16657630522730/16852947557009.png" alt="image-20221017194904922" /></p>
+<ol>
+<li>
+<p>输入：用户点击的时尚单品序列 + 候选集</p>
+</li>
+<li>
+<p>输出：时尚个人配搭</p>
+</li>
+<li>
+<p>过程：</p>
+<ol>
+<li>将候选集合转化为候选搭配空间向量</li>
+<li>输入用户点击序列进Per网络</li>
+<li>通过一个特殊的编码【START】启动Gen网络，解码器就会根据时尚单品每次在候选搭配空间里进行相似度搜索一个搭配的单品，通过自回归结合之前的点击记录进行新的生成，直到编码【END】出现</li>
+</ol>
+</li>
+<li>
+<p>Per网络提供用户偏好信号，Gen网络根据用户偏好和服装搭配生成搭配（Gen网络是用的预训练的FOM模型）</p>
+<p>Gen = ((Masked Multi-Head self-attention + Multi-Head attention + Position-wise Feed-Forward Network) + Layer Normalization) * \(l\)</p>
+<ol>
+<li>掩码是为了预测的单品只与之前生成的输出有关</li>
+<li>Multi-Head attention子层接收编码层的输出，即用户行为</li>
+</ol>
+</li>
+</ol>
+<h2><a id="experiment" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Experiment</h2>
+<h3><a id="fashion-outfit-compatibility" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fashion Outfit Compatibility</h3>
+<blockquote>
+<p>To evaluate the performances of multi-modal embeddings and models on predicting the outt compatibility, we adopted two wide-used tasks: Fill In the Blank &amp; Compatibility Prediction</p>
+</blockquote>
+<p>FITB任务是从多个选择中预测一个与其他项目兼容的项目，以便在空白处填上。</p>
+<p>CP任务是预测一个候选OUTT是否兼容。</p>
+<h4><a id="%E4%B8%8D%E5%90%8C%E6%A8%A1%E6%80%81%E6%B6%88%E8%9E%8D" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>不同模态消融</h4>
+<p><img src="media/16657630522730/16852947557061.png" alt="image-20221018004615147" /></p>
+<ol>
+<li>在FITB和CP任务中，文本本身的效果最好，但图像和CF提供了互补的信息。</li>
+<li>单独的CF嵌入效果不是很好，部分原因是它缺乏语义的视觉和文本信息，而这在时尚兼容性中是很重要的。</li>
+<li>来自Inception Resnet V2的1536维CNN特征被压缩到全连接层的128维。由此产生的维度相对较小，无法包含时尚物品的重要视觉信息，这部分解释了仅有图像模式的表现不佳。类似的结果也可以从[11]中观察到。</li>
+</ol>
+<h4><a id="%E4%B8%8E%E5%85%B6%E4%BB%96%E6%96%B9%E6%B3%95%E5%AF%B9%E6%AF%94" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>与其他方法对比</h4>
+<p><img src="media/16657630522730/16852947557107.png" alt="image-20221018004912526" /></p>
+<p>基于FITB的结果看</p>
+<p>（1）基于序列的模型对输入顺序很敏感，而基于集合的模型则不敏感</p>
+<p>（2）Bi-LSTM在有序输入和无序输入时都比F-LSTM的结果好</p>
+<p>（3）FOM对两个输入都表现得最好</p>
+<p>基于CP结果看，与FITB类似，基于序列的模型对输入顺序仍然很敏感。FOM以明显的优势获得最佳性能。</p>
+<h3><a id="fashion-outfit-generation-and-recommendation" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fashion Outfit Generation and Recommendation</h3>
+<p>由于SetNN不能生成outts，我们把重点放在可用的生成模型之间的比较上。值得一提的是，现有的生成模型，包括F-LSTM和Bi-LSTM，都不能用来做个性化推荐。所以我们随机推荐（RR）这些生成的信息给用户。为了更好的比较推荐性能，还部署了经典的CF方法来推荐。通过CTR量化比较。</p>
+<p><img src="media/16657630522730/16852947557159.png" alt="image-20221018010113176" /></p>
+<p>（1）尽管七天内的CTR值不同，我们仍然观察到一个明显的现象，即推荐性能主要依赖于推荐方法。</p>
+<p>（2）这些模型的兼容性能有所提高，但不是很明显。</p>
+<p>（3）带有预训练的FOM的POG的性能比单独的POG有很大的提高。</p>
+<h2><a id="take-away" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Take away</h2>
+<ol>
+<li>数据集（101万服装<strong>搭配</strong>并有80个常用服装类别标注）</li>
+<li>文中提到了item的权重，但是似乎并没有体现出来</li>
+<li>本文主要做特征提取和检索形成一个OUTT，推荐用的RR和CF算法都与本文关系不大</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Tao Zhou et al. - 2020 - Hi-Net: Hybrid-fusion Network for Multi-modal MR Image Synthesis]]></title>
+    <link href="https://costinyuan.com/16613250422167.html"/>
+    <updated>2022-08-24T15:10:42+08:00</updated>
+    <id>https://costinyuan.com/16613250422167.html</id>
+    <content type="html"><![CDATA[
+<h2><a id="about" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h2>
+<h3><a id="%E6%A0%87%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>标题</h3>
+<p>Hi-Net: Hybrid-fusion Network for Multi-modal MR Image Synthesis</p>
+<p>Hi-Net: 用于多模态MR图像合成的混合融合网络</p>
+<h3><a id="%E5%8F%91%E8%A1%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>发表</h3>
+<p>2020年 IEEE Trans. Medical Imaging</p>
+<h3><a id="%E4%BD%9C%E8%80%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>作者</h3>
+<p>Tao Zhou</p>
+<p>Huazhu Fu</p>
+<p>Geng Chen</p>
+<p>Jianbing Shen</p>
+<p>Ling Shao.</p>
+<h3><a id="%E6%9C%BA%E6%9E%84" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>机构</h3>
+<p>IIAI 阿联酋起源人工智能研究院</p>
+<h3><a id="%E5%85%B3%E6%B3%A8%E7%82%B9" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>关注点</h3>
+<p>多模态、特征融合、自适应调参、Adam solver</p>
+<h2><a id="content" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Content</h2>
+<h3><a id="%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>背景介绍</h3>
+<h4><a id="mri%E5%9B%BE%E5%83%8F" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>MRI图像</h4>
+<ul>
+<li>MRI有好几种模式，如T1, T1c, T2, Flari，每种模式都能捕捉到特定特征信息</li>
+<li>由于各种原因，想获得多种MRI很困难。数据集不完整，可能会对临床分析诊断不利</li>
+<li>传统的做法是丢掉不完整的MRI图，只使用全模式的MRI做训练</li>
+</ul>
+<h4><a id="%E5%A4%9A%E6%A8%A1%E6%80%81%E5%AD%A6%E4%B9%A0" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>多模态学习</h4>
+<ul>
+<li>流行的策略是找到一个新的共同成分空间（共享表征？）
+<ul>
+<li>典型相关分析CCA将每种模式的特征投射到一个较低维的子空间</li>
+<li>多核学习MKL利用一组来自多视图数据的预设核，优化权重整合这些模态</li>
+</ul>
+</li>
+<li>深度网络和多模态学习
+<ul>
+<li>通过xxx和xxx和xxx预测疾病（在高层进行多模态特征融合）</li>
+</ul>
+</li>
+</ul>
+<h3><a id="%E6%8F%90%E5%87%BA%E9%97%AE%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>提出问题</h3>
+<ol>
+<li>
+<p>如何使用几个模式的MRI图像合成完整的MRI图像集，充分利用不完整样本中的有用信息？</p>
+</li>
+<li>
+<p>在利用多模态数据相关性的同时，保留模态的特定属性</p>
+</li>
+</ol>
+<h3><a id="%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>解决方法</h3>
+<p>新型混合融合网络Hi-Net，融合现有图像来合成或缺失模态图像，他包括：</p>
+<ul>
+<li>特定模式网络：类似自动编码器，捕捉特定模式图像，学习高级特征</li>
+<li>多模态融合网络：学习多种模式之间的相关性</li>
+<li>多模态合成网络</li>
+</ul>
+<p>以及两个策略/功能：</p>
+<ul>
+<li>分层多模态融合策略：有效利用不同特征层之间的相关性</li>
+<li>MFB：不同融合策略的权重自适应<br />
+<img src="media/16613250422167/image-20211027190143845.png" alt="image-20211027190143845" /></li>
+</ul>
+<h3><a id="%E5%88%9B%E6%96%B0%E7%82%B9" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>创新点</h3>
+<ol>
+<li>不同于现存的单模态医疗影像生成，我们用的是多模态生成缺失图像</li>
+<li>我们的框架既有单独学习模式特征的“特定模式网络”，也有学习多模态关系的“多模态融合网络”</li>
+<li>我们提出了一个全新的方法MFB，可以根据不同的策略自适应权重来</li>
+</ol>
+<h3><a id="hi-net" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hi-Net</h3>
+<h4><a id="%E7%89%B9%E5%AE%9A%E6%A8%A1%E5%BC%8F%E7%BD%91%E7%BB%9C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>特定模式网络</h4>
+<ol>
+<li>输入图像提取特征，用 \(h_{x_i}\) 表示第i个模型的高级特征</li>
+<li>然后使用一个自动编码器的结构，用学到的高层表征重建原始图像</li>
+<li>用 \(l_1\)-norm 来衡量原始图像和重建图像的差异（也用来监督侧面输出）</li>
+<li>每一个卷积层后都要进行归一化处理</li>
+</ol>
+<h4><a id="%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E7%BD%91%E7%BB%9C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>多模态融合网络</h4>
+<ol start="0">
+<li>现有的多模态融合策略要么是先堆叠原始数据，要么是提取高级特征然后串联</li>
+<li>我们的方法是每卷积一次就融合一次（低层高层全都要）</li>
+<li>通过MFB对不同层的输入自动调参，MFB的输出还会传递给下一层</li>
+</ol>
+<p>该网络是独立的，只用来研究不同模式之间的关系</p>
+<p><img src="media/16613250422167/16852920889764.png" alt="image-20211027203519913" /></p>
+<h4><a id="%E5%A4%9A%E6%A8%A1%E6%80%81%E5%90%88%E6%88%90%E7%BD%91%E7%BB%9C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>多模态合成网络</h4>
+<ol>
+<li>把MFB最后的输出输入到一个GAN模型中</li>
+<li>用类似于pixel-to-pixel的方法，使用鉴别器D区分生成图G与真实图像y</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Wu et al. - 2021 - ACTIVE LEARNING FOR GRAPH NEURAL NETWORKS VIA NODE FEATURE PROPAGATION]]></title>
+    <link href="https://costinyuan.com/16613242705690.html"/>
+    <updated>2022-08-24T14:57:50+08:00</updated>
+    <id>https://costinyuan.com/16613242705690.html</id>
+    <content type="html"><![CDATA[
+<h2><a id="about" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h2>
+<h3><a id="%E6%A0%87%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>标题</h3>
+<p>ACTIVE LEARNING FOR GRAPH NEURAL NETWORKS VIA NODE FEATURE PROPAGATION</p>
+<p>通过节点特征传播实现图神经网络的主动学习</p>
+<h3><a id="%E6%9D%A5%E6%BA%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>来源</h3>
+<p>[2021 CVPR] Sequential Graph Convolutional Network for Active Learning 引用论文</p>
+<p>ArXiv ICLR 2020</p>
+<h3><a id="%E4%BD%9C%E8%80%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>作者</h3>
+<p>Yuexin, Wu</p>
+<p>Yichong, Xu：Ph.D. Carnegie Mellon University</p>
+<p>Aarti, Singh：Associate Professor, Carnegie Mellon University</p>
+<p>Yiming, Yang：Professor, Carnegie Mellon University</p>
+<p>Artur, Dubrawski：Director, Carnegie Mellon University</p>
+<h3><a id="%E6%9C%BA%E6%9E%84" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>机构</h3>
+<p>School of Computer Science, Machine Learning Department, Carnegie Mellon University</p>
+<h2><a id="content" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Content</h2>
+<h2><a id="%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>相关工作</h2>
+<h3><a id="active-learning" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Active Learning</h3>
+<ul>
+<li>早期的基于图结构数据的主动学习，通过图正则化来研究无参分类模型</li>
+<li>最近的研究是，开始分析在图信号处理框架中的主动采样</li>
+</ul>
+<p>这些研究都是关注于图信号平滑但节点特征标签有噪声的情况</p>
+<ul>
+<li>optimal experimental design可以用于数据解决线性回归问题</li>
+</ul>
+<p>但不能解决非线性无相关性标签的分类问题</p>
+<h3><a id="graph-neural-networks" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Graph Neural Networks</h3>
+<ul>
+<li>图神经网络自2017年兴起，他的变种多是多层架构，在每一层传递节点信息</li>
+<li>在最近的主动学习中使用GNN的研究中，提出了将不确定性、图中心性和信息密度线性结合，来获得最佳性能</li>
+<li>再就是通过可学习的基于多臂老虎机技术的权重联合来优化结果</li>
+</ul>
+<p>不同于结合不同参数的方法，本文从聚类传播节点特征作为切入。展示了我们的one-step主动设计在小标签环境下表现优于其他基于学习网络表现，并在大量标注数据中也不会降低表现</p>
+<h2><a id="%E5%87%86%E5%A4%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>准备</h2>
+<p>\(V = \{ 1, 2, ..., n\}\)</p>
+<p>\( G(V,E) = \begin{cases} x_i \in \mathcal{X} \subseteq \mathbb{R} ^d \\ y_i \in \mathcal{Y}=\{1,2,...,c\} \end{cases}\)</p>
+<p>\(x_i\) 是特征向量，\(y_i\) 是标签</p>
+<h4><a id="%E8%BE%93%E5%85%A5" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>输入</h4>
+<p>\(X = \begin{pmatrix} 1111\\2222\\....\\nnnn \end{pmatrix}_{n \times x}\)  一行就是一个节点的特征，一共n行</p>
+<p>\(Y= \begin{pmatrix} y_1,y_2,...,y_n \end{pmatrix}\) 每一个节点的标签</p>
+<h4><a id="%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>损失函数</h4>
+<p>\(\mathcal{L} (\mathcal{M} \mid G,X,Y) : \mathcal{M}\) 通过匹配G和X来预测向量 \(\hat{Y} \in \mathcal{Y}^n\)</p>
+<h4><a id="step-t" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step t</h4>
+<ol>
+<li>
+<p>选一个子集 \(S^t \subseteq \{1,2, ...,n\}\)</p>
+</li>
+<li>
+<p>\(S^t\) 中每一个数都对应一个随机选择的 \(y_i\)</p>
+</li>
+<li>
+<p>用 \(\eta_c(v)\) 表示节点v获得 y=c 的概率，则有 \(\eta(v) = (\eta_1(v),...,\eta_c(v))^T\)</p>
+</li>
+<li>
+<p>主动学习算法 \(\mathcal{A}\) 使用G, X和 \(y_i\) 对 \(i\in S^0 \bigcup S^1 \bigcup ... \bigcup S^t\) 作为训练集训练模型，使用训练算法 \(\mathcal{M}\) ，训练好的模型称为 \(\mathcal{M}_{A_t}\)，如果所有主动学习策略都用的训练算法 \(\mathcal{M}\)，那么就直接把\(\mathcal{M}_{A_t}\) 简写成\( \mathcal{A}_t\)</p>
+</li>
+<li>
+<p>我们的目标函数就成了 \(\min _{\mathbf{s}^0 \cup \cdots \cup \mathbf{s}^t} \mathbb{E}\left[l\left(\mathcal{A}_t \mid G, X, Y\right)\right]\) 由Y和 \(\mathcal{A}\) 提供随机性</p>
+<p>**我们要让图神经网络做\(\mathcal{M}\) **</p>
+</li>
+</ol>
+<h3><a id="%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%A1%86%E6%9E%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>图神经网络框架</h3>
+<p>图神经网络定义了一个多层特征传播过程就类似于MLPs，定义第k层表征矩阵为 \(X^{(k)}\)，\( X^{(0)}\) 就是输入的节点特征</p>
+<p>不同之处就是它定义的下层表示的递归函数</p>
+<p><img src="media/16613242705690/16852931035439.png" alt="" /></p>
+<p>而图卷积网络则定义为</p>
+<p><img src="media/16613242705690/16852931035515.png" alt="" /></p>
+<p><img src="media/16613242705690/16852931035534.png" alt="" /></p>
+<p>通过添加身份矩阵，类似于MLPs中的残差链接，绕过浅层表征到深层。GCN鼓励这样的到的深层表征共享</p>
+<p>对于分类任务，常使用一个softmax方法作为最后一层</p>
+<p><img src="media/16613242705690/16852931035552.png" alt="" /></p>
+<p>我们使用GCN作为统一 \(\mathcal{M}\) 模型在接下来的AL策略中</p>
+<h2><a id="al%E7%AD%96%E7%95%A5%E5%92%8C%E7%90%86%E8%AE%BA%E5%88%86%E6%9E%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>AL策略和理论分析</h2>
+<p>传统的AL算法一次只选一个实例进行标注，我们关注到“batch” one-step主动学习，一次性选出对所有节点有丰富信息的节点（也称为optimal experimental design），选取b个最有代表的节点作为batch，我们的目标函数就变成了</p>
+<p><img src="media/16613242705690/16852931035570.png" alt="" /></p>
+<h3><a id="featprop%E7%AE%97%E6%B3%95%E6%8F%8F%E8%BF%B0" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>FeatProp 算法描述</h3>
+<p>输入：特征矩阵X ，图矩阵G，预算b</p>
+<ol>
+<li>计算距离 \(d_{X,G}\)</li>
+<li>使用b中心的 \(d_{X,G}\) 矩阵做聚类</li>
+<li>挑选最接近聚类中心的\(s\)作为中心</li>
+<li>获得\(s\)中节点v们的标签 然后训练\(\mathcal{M}\)（GCN）</li>
+</ol>
+<p>输出：模型\(\mathcal{M}\)</p>
+<h4><a id="%E8%B7%9D%E7%A6%BB%E6%96%B9%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>距离方法</h4>
+<p>传统做法：$d_{(X,G)}(V_i,V_j) = |(S^KX)_i-(S^KX)_j|_2$</p>
+<p>对well-trained的网络有帮助，在训练初期非常不准确，选择不出有代表的节点，我们使用的是：</p>
+<p><img src="media/16613242705690/16852931035589.png" alt="" /></p>
+<p>\(S^KX\) 类似于去掉所有激活函数和层参数的简化GCN，这样可以去掉没训练的参数对距离计算的影响，依旧带着图结构进入计算，并且选出的节点会有很强的归纳偏置</p>
+<h4><a id="%E8%81%9A%E7%B1%BB%E6%96%B9%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>聚类方法</h4>
+<ul>
+<li>K-Means: 生成的中心节点可能是不存在的，就没办法进行label了</li>
+<li>K-Center</li>
+<li><strong>K-Medoids</strong>: 类似于K-Means，但是选出的节点一定是真实存在的</li>
+</ul>
+<h3><a id="%E5%88%86%E7%B1%BB%E6%8D%9F%E5%A4%B1%E8%BE%B9%E7%95%8C%E7%90%86%E8%AE%BA%E5%88%86%E6%9E%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>分类损失边界理论分析</h3>
+<p><img src="media/16613242705690/16852931035605.png" alt="" /></p>
+<p>Coreset 方法：找到一个训练集的 \(\delta-over\)</p>
+<p><img src="media/16613242705690/16852931035622.png" alt="" /></p>
+<p><img src="media/16613242705690/16852931035639.png" alt="" /></p>
+<p>由于<img src="media/16613242705690/16852931035656.png" alt="" /> ，所以可以看出K-Medoids比K-Center可以获得一个更好的边界</p>
+<blockquote>
+<p>K-Medoids对于红线平均值，而K-Center对应红线最大值</p>
+</blockquote>
+<p><img src="media/16613242705690/16852931035674.png" alt="" /></p>
+<h2><a id="%E5%AE%9E%E9%AA%8C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>实验</h2>
+<ol>
+<li>跑了四个网络数据集结果，CoraFull是一个高密度网络数据集，来描述在大尺度环境下的表现</li>
+</ol>
+<p><img src="media/16613242705690/16852931035693.png" alt="" /></p>
+<ol start="2">
+<li>比较使用FeatProp和Coreset算法使用的时间</li>
+</ol>
+<p><img src="media/16613242705690/16852931035714.png" alt="" /></p>
+<ol start="3">
+<li>在不同数量（10,20,40,80,160）的预算节点进行训练的平均Macro-F1</li>
+</ol>
+<p><img src="media/16613242705690/16852931035737.png" alt="" /></p>
+<ol start="4">
+<li>
+<p>与基线方法进行比较</p>
+<p><img src="media/16613242705690/16852931035760.png" alt="" /></p>
+</li>
+</ol>
+<h3><a id="%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>实验结果</h3>
+<p>我们一开始从池子里随机选出五个节点，使用五个不同的随机种子节点，将他们的平均分类准确率作为度量，实验结果均优于其他方法</p>
+<h3><a id="%E6%9C%AA%E6%9D%A5%E5%B7%A5%E4%BD%9C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>未来工作</h3>
+<p>FeatProp 仅侧重于对有意义的（图形）表示中的代表点进行采样，而基于不确定性的方法式从由标签引导的不同标准中选择主动节点，如何以有原则的方式将该类方法与 FeatProp 结合仍然是一个开放有趣的问题。</p>
+<h3><a id="%E6%83%B3%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>想法</h3>
+<p>本文没有入选的原因可能在于只提出了一个算法但没有实际应用，创新点不足，结构不完整。但GCN+AL在少标签的聚类工作中仍有很大的用武之地。相比消耗巨大的transformer，我觉得GCN更适合装备不足的情况，通过框架解决算力问题。上周的文章的framework依旧是我的basement。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Kaiming He et al. - 2021 - Masked Autoencoders Are Scalable Vision Learners]]></title>
+    <link href="https://costinyuan.com/16613242144146.html"/>
+    <updated>2022-08-24T14:56:54+08:00</updated>
+    <id>https://costinyuan.com/16613242144146.html</id>
+    <content type="html"><![CDATA[
+<h1><a id="about" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h1>
+<h3><a id="%E6%A0%87%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>标题</h3>
+<p>Masked Autoencoders Are Scalable Vision Learners</p>
+<p>掩码自动编码器：可拓展视觉学习器</p>
+<h3><a id="%E5%8F%91%E8%A1%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>发表</h3>
+<p>2021.11.11 arxiv tech report</p>
+<h3><a id="%E4%BD%9C%E8%80%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>作者</h3>
+<p>Kaiming He</p>
+<p>Xinlei Chen</p>
+<p>Saining Xie</p>
+<p>Yanghao Li</p>
+<p>Piotr Doll´ar</p>
+<p>Ross Girshick</p>
+<h3><a id="%E6%9C%BA%E6%9E%84%E7%BB%84%E7%BB%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>机构组织</h3>
+<p>Facebook AI Research</p>
+<h3><a id="%E4%BB%A3%E7%A0%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>代码</h3>
+<p>原代码：未公开</p>
+<p>复现：<a href="https://github.com/pengzhiliang/MAE-pytorch">https://github.com/pengzhiliang/MAE-pytorch</a></p>
+<h1><a id="content" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Content</h1>
+<p><img src="media/16613242144146/image-20211123154617195.png" alt="image-20211123154617195" /></p>
+<h3><a id="%E9%A2%84%E5%A4%84%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>预处理</h3>
+<p>带有位置信息的随机掩码patches</p>
+<h3><a id="%E7%BC%96%E7%A0%81%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>编码器</h3>
+<p>除去掩码部分的patches输入到encoder中，提取特征</p>
+<h3><a id="%E8%A7%A3%E7%A0%81%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>解码器</h3>
+<p>根据位置信息，将提取的特征与掩码合并输入解码器，还原出原图</p>
+<h1><a id="question" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Question</h1>
+<ol>
+<li>
+<p>transformer / CNN，图像和mask ratio</p>
+<p>老生重谈，transformer可以很好的获取全局特征。图像是具有真实世界存在的自然信号，有很强的空间(信息)冗余：一张照片遮住很多内容，也可以从其他部分判断出原图大概是什么样子；或者让你形容一下刚看过的一个人的穿着，脑海中不可能出现非常具体的细节，而只有大致的样子。</p>
+</li>
+<li>
+<p>为什么要用掩码mask？</p>
+<p>自监督方法训练预训练模型，之前的做法都是精心设计一个无标签的pre-task，然后获得预训练的特征提取模型，来完成下游任务。</p>
+<p>mask是指移除一部分信息来学习预测消失的内容，来训练具有泛化能力的预训练模型。</p>
+<p>最早是出现在NLP的BERT中，这种方法训练模型更接近自监督的本质。</p>
+<p>本文的高mask ratio可以做到一石二鸟（强预训练模型和快训练）</p>
+</li>
+<li>
+<p>ssl  handcrafted  pretext  tasks 种类</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>intra-image</p>
+<ul>
+<li>colorization</li>
+<li>jigsaw puzzle</li>
+</ul>
+</li>
+<li>
+<p>inter-image</p>
+<ul>
+<li>contrastive learning</li>
+</ul>
+</li>
+<li>
+<p>recover</p>
+<ul>
+<li>合成鉴别descriminating synthetic artifacts</li>
+<li>着色colorization</li>
+<li>图像补全image inpainting</li>
+<li>降噪编码denoising auto-encoders</li>
+</ul>
+</li>
+<li>
+<p>generate labels</p>
+<ul>
+<li>寻找两个patch的关系predicting relation of two patches</li>
+<li>拼图solving jigsaw puzzles，</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li>
+<p>下游任务</p>
+<p>MAE的decodeer是可以根据需求随便改动的。本文的下游任务是reconstruct，训练和验证都用了。文章也做了物体检测和语义分割的下游实验，效果都比之前的BEiT效果好或者持平（但是MAE训练更快）。但是没有用预训练模型做聚类（做了线形回归linear probing）。</p>
+</li>
+<li>
+<p>本文的surprise</p>
+<p>1）简单高效的模型，给BEiT做减法，反而得到了更好的效果</p>
+<p>2）超大的mask ratio，甚至连人都很能还原图像。这涉及到图像信息&amp;回归的知识</p>
+<p>3）没有使用最近热门的对抗学习 contrative learning，而是回到了generative learning</p>
+<p>4）<del>看了别人的评价说，推进了 NLP和CV模型的统一，不了解NLP不予评价</del></p>
+</li>
+<li>
+<p>本文模型可改进的地方</p>
+<blockquote>
+<p>知乎：“ 预训练的过程应该可以进一步优化吧，可以尝试一下课程学习，mask 的比例从小慢慢增大，感觉应该能减少一些预训练时间（类似 BERT 先训长为 128 的片段再训 512 一样）？”</p>
+</blockquote>
+<p>感觉有些合理 但是违背了文章的初衷（大mask快又好）不知道会不会得到更好的效果</p>
+</li>
+<li>
+<p>高度抽象出的预训练模型提出的特征丢失了细节，适合用在时装风格分类下游任务上吗？</p>
+<p>不像ViT每层都是不同粒度的特征，丢失75%信息得到的高度抽象的特征，虽然linear probing很高，但是可以直接用于风格分类吗，或者一眼看出什么风格的区别是合理的吗</p>
+<blockquote>
+<p><strong>“Jigsaw Clustering for Unsupervised Visual Representation Learning” 无监督的特征学习for聚类</strong></p>
+</blockquote>
+</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Dai et al. - 2021 - UP-DETR: Unsupervised Pre-training for Object Detection with Transformers]]></title>
+    <link href="https://costinyuan.com/16613241634568.html"/>
+    <updated>2022-08-24T14:56:03+08:00</updated>
+    <id>https://costinyuan.com/16613241634568.html</id>
+    <content type="html"><![CDATA[
+<h2><a id="about" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h2>
+<h3><a id="%E6%A0%87%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>标题</h3>
+<p>UP-DETR: Unsupervised Pre-training for Object Detection with Transformers</p>
+<p>UP-DETR: 针对目标检测的无监督预训练Transformer</p>
+<h3><a id="%E5%8F%91%E8%A1%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>发表</h3>
+<p>CVPR 2021 Oral</p>
+<h3><a id="%E4%BD%9C%E8%80%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>作者</h3>
+<p>Zhigang Dai ：华南理工大学</p>
+<p>Bolun Cai ：腾讯微信AI</p>
+<p>Yugeng Lin ：腾讯微信AI</p>
+<p>Junying Chen* ：华南理工大学</p>
+<h3><a id="%E4%BB%A3%E7%A0%81%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>代码/预训练模型</h3>
+<p><a href="https://github.com/dddzg/up-detr">https://github.com/dddzg/up-detr</a></p>
+<h2><a id="content" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Content</h2>
+<h3><a id="%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>背景介绍</h3>
+<h4><a id="detr" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>DETR</h4>
+<p><img src="media/16613241634568/16852926816187.png" alt="" /></p>
+<p>是一种用来目标检测的transformer编码-解码结构，含有：</p>
+<p>1）预训练的CNN（ResNet50 with 23.2M parameters）</p>
+<p>2）没有预训练的<a href="http://peterbloem.nl/blog/transformers">Transdormer from scratch</a>（<a href="https://zhuanlan.zhihu.com/p/351558402">Vanilla transformer</a> with 18.0M parameters）</p>
+<p>通过对不同的对象查询（object queries）学习专属空间，得到不同的对象查询的坐标和盒子大小</p>
+<h4><a id="%E6%97%A0%E7%9B%91%E7%9D%A3%EF%BC%88%E8%87%AA%E7%9B%91%E7%9D%A3%EF%BC%89%E9%A2%84%E8%AE%AD%E7%BB%83" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>无监督（自监督）预训练</h4>
+<p>比如 BERT（NLP）的masked language model、MoCo（CV）的instance discrimination，通过一定的方式，从样本中无监督的构造一个 label</p>
+<p>关键点：设计合理的pretext task</p>
+<h3><a id="%E5%8A%A8%E6%9C%BA" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>动机</h3>
+<p>既然CNN可以是无监督训练的，那么transformer能不能也做个无监督预训练呢</p>
+<h3><a id="%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>存在的问题</h3>
+<p>现存的用于CNN的pretext task不能直接应用于预训练DETR的transformers</p>
+<blockquote>
+<p>主要原因是DETR中的transformer主要是用来做空间信息上的定位而MoCo的pretext主要是用来提高CNN的物体鉴别能力</p>
+</blockquote>
+<h3><a id="%E6%83%B3%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>想法</h3>
+<blockquote>
+<p>受无监督学习在NLP领域中的极大成功的启发，我们的无监督预训练也用<strong>超大的训练集</strong>（ImageNet），把目标检测作为我们的下游任务（downstream task），提出了新的pretext task —— random query patch detection</p>
+</blockquote>
+<p>随机框若干个patch下来，把这些patch输入到decoder，原图输入到encoder，整个任务就变成了给定patch找他们在图中的位置。 </p>
+<p>对于一个无监督训练好的DETR，只要输入patch，他就能做到无监督定位patch的功能（不需要额外的<a href="https://blog.csdn.net/just_sort/article/details/103308883">NMS</a>后处理），这个patch还能支持数据增强和尺度变换。</p>
+<p><img src="media/16613241634568/16852927809090.png" alt="" /></p>
+<p>两个难点：</p>
+<ol>
+<li>
+<p>多任务学习 Multi-task learning</p>
+<ul>
+<li>
+<p>对象检测是对象分类和定位的耦合（两个task）</p>
+</li>
+<li>
+<p>为了避免query patch检测破坏分类特征，我们引入了”冻结预训练主干网络“（frozen pre-training backbone）和”patch特征重建“（patch feature reconstruction）</p>
+</li>
+<li>
+<p>冻结预训练主干网络：固定预训练的CNN的权重</p>
+</li>
+<li>
+<p>patch特征重建：使经过transformer的特征能保持和经过CNN后的特征保持一致的分类判别性</p>
+</li>
+</ul>
+</li>
+<li>
+<p>多查询定位 Multi-query localization</p>
+<ul>
+<li>
+<p>一张图内可能有多个对象，当对象查询object query太大时会很难收敛</p>
+</li>
+<li>
+<p>随机设置M个query patch，并分配至100个embedding</p>
+</li>
+<li>
+<p>提出了一个放在解码器上的attention mask，以确保query之间框的预测独立</p>
+</li>
+<li>
+<p>提出了object query shuffle方法，以确保embedding和query patch的随机性</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3><a id="up-detr" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>UP-DETR</h3>
+<h4><a id="1%EF%BC%89pre-training" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>1）pre-training</h4>
+<blockquote>
+<p>Signle-query Patch</p>
+</blockquote>
+<p><img src="media/16613241634568/16852927809144.png" alt="" /></p>
+<ol>
+<li>
+<p>将输入图像输入CNN主干神经网络中获得图像特征，加入位置编码输入tranformer</p>
+</li>
+<li>
+<p>随机抓一块query patch，通过全局池化的CNN网络得到patch的特征，展平后分别加上object query形成N对预测框</p>
+</li>
+<li>
+<p>计算N对预测框的相同匹配代价（same match cost），使用匈牙利算法计算真值（ground-truth）</p>
+</li>
+<li>
+<p>损失函数（Hungarian loss）：交叉墒误差（match or not）+ （if match）\(l_1\) with IoU + （if match）重建损失</p>
+<p><img src="media/16613241634568/image-20211020001114648.png" alt="image-20211020001114648" /></p>
+</li>
+</ol>
+<blockquote>
+<p>Multi-query Patches</p>
+</blockquote>
+<p><img src="media/16613241634568/image-20211019210625597.png" alt="image-20211019210625597" /></p>
+<ol>
+<li>把N个对象查询分成M组，每个query patch被分配给N/M个对象查询</li>
+<li>对象查询嵌入会随机洗牌query shuffle</li>
+<li>“注意力遮罩”加在自注意力解码器的softmax层中，如果两个对象查询相互影响就会遮挡</li>
+<li>其他的都和Signle-query Patch一样</li>
+</ol>
+<h4><a id="2%EF%BC%89fine-tuning-procedures" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>2）fine-tuning procedures</h4>
+<h3><a id="%E5%AE%9E%E9%AA%8C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>实验</h3>
+<h4><a id="pre-training-setup" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>pre-training setup</h4>
+<p>1）训练了ImageNet上1.28M个无标签训练集，使用Res-Net50作为CNN骨干网络使用SwAV方法进行无监督训练。在训练UP-DETR中，冻结CNN参数</p>
+<p>2）放大ImageNet里的图片尺寸到[320:480, :600]，随机patch的xywh，然后调整到128x128</p>
+<p>3）使用SimCLR-style的transformer结构，使用AdamW来优化UP-DETR，初始学习率为0.0001，权重下降为0.0001</p>
+<p>4）使用大小为256的mini-batch在8个V100上训练了60epochs，在40epochs的时候学习率*0.1</p>
+<h4><a id="fine-tuning-setup" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>fine-tuning setup</h4>
+<p>使用VOC和COCO进行参数微调，tranformers的学习率设为0.0001，CNN骨干网络的学习率设为0.00005，其他都和DETR一样：8个v100 每个处理4张图</p>
+<p>short：150 epochs，在100epochs的时候 lr*0.1</p>
+<p>long：300 epochs，在200的时候 lr*0.1</p>
+<h4><a id="%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%BB%93%E6%9E%9C%E5%AF%B9%E6%AF%94" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>目标检测结果对比</h4>
+<blockquote>
+<p><a href="https://blog.csdn.net/xys430381_1/article/details/90770520">AP</a>：如果检测框与groud-truth框的IOU区域大于某个阈值，就可以认为是true positive</p>
+<p>如果IoU阈值=0.5，则为 \(AP_{50}\)</p>
+<p>如果是对小物体（area&lt;32），则为 \(AP_m\)，以此类推</p>
+</blockquote>
+<ul>
+<li>Faster R-CNN / DETR / UP-DETR 在相同数据集上目标检测结果</li>
+</ul>
+<p><img src="media/16613241634568/image-20211020011353161.png" alt="image-20211020011353161" /></p>
+<ul>
+<li>多种模型/骨干网络/epochs/数据集交叉比较</li>
+</ul>
+<p><img src="media/16613241634568/image-20211020012203042.png" alt="image-20211020012203042" /></p>
+<ul>
+<li>不同训练集150epochs和300epochs下DETR和UP-DETR学习曲线对比</li>
+</ul>
+<p><img src="media/16613241634568/image-20211020085828579.png" alt="image-20211020085828579" /></p>
+<ul>
+<li>single-query和multi-query对比</li>
+</ul>
+<img src="media/16613241634568/16852927808948.png" alt="image-20211020115154617" style="zoom:50%;" />
+<ul>
+<li>DETR、不使用冻结主干网络的UP-DETR（ac）、冻结主干网络的UP-DETR(bd)</li>
+</ul>
+<img src="media/16613241634568/16852927809040.png" alt="image-20211020120034426" style="zoom:50%;" />
+<h4><a id="%E5%8F%AF%E8%A7%86%E5%8C%96" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>可视化</h4>
+<p>1）手动裁剪图像中的物体patch，并对其进行SimCLRstyle数据增强</p>
+<p>2）将这些patch作为query object送入模型，最后将模型的输出与边框进行可视化处理</p>
+<p>这个过程可以看做是无监督的一次性测试或基于生度学习的模版匹配</p>
+<p><img src="media/16613241634568/16852927809397.png" alt="image-20211020170121560" /></p>
+<h3><a id="%E7%BB%93%E8%AE%BA" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>结论</h3>
+<ul>
+<li>
+<p>最近关于无监督预训练的研究主要集中在对比学习的特征识别上，而不是空间定位的专门模块。</p>
+</li>
+<li>
+<p>在UP-DETR预训练中，预训练任务主要是通过位置编码和可学习的对象查询来设计补丁定位。</p>
+</li>
+<li>
+<p>future work：一种先进的方法能够将CNN和变换器的预训练整合到一个统一的端到端框架中，并将UP-DETR应用到更多的下游任务中</p>
+</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Chen et al. - 2021 - Jigsaw Clustering for Unsupervised Visual Representation Learning]]></title>
+    <link href="https://costinyuan.com/16613241011552.html"/>
+    <updated>2022-08-24T14:55:01+08:00</updated>
+    <id>https://costinyuan.com/16613241011552.html</id>
+    <content type="html"><![CDATA[
+<h2><a id="about" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h2>
+<h3><a id="%E6%A0%87%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>标题</h3>
+<p>Jigsaw Clustering for Unsupervised Visual Representation Learning</p>
+<p>基于拼图聚类的无监督视觉表征学习</p>
+<h3><a id="%E5%8F%91%E8%A1%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>发表</h3>
+<p>CVPR 2021 Oral</p>
+<h3><a id="%E4%BD%9C%E8%80%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>作者</h3>
+<p>Pengguang Chen：香港中文大学</p>
+<p>Shu Liu：香港中文大学Ph.D / Smartmore思谋科技</p>
+<p>Jiaya Jia*：香港中文大学科学技术学院教授 / 微软亚洲研究所（香港）/ Smartmore思谋科技</p>
+<h3><a id="%E5%9B%A2%E9%98%9F" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>团队</h3>
+<p>香港中文大学、 Smartmore思谋科技</p>
+<h3><a id="%E4%BB%A3%E7%A0%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>代码</h3>
+<p><a href="https://github.com/JiaResearch-Lab/JigsawClustering">https://github.com/JiaResearch-Lab/JigsawClustering</a></p>
+<h2><a id="content" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Content</h2>
+<h3><a id="%E5%89%8D%E7%BD%AE%E4%BB%BB%E5%8A%A1for%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>前置任务 for 无监督学习</h3>
+<ul>
+<li>图像内任务 intra-image tasks
+<ul>
+<li>着色 colorization</li>
+<li>拼图 jigsaw puzzle</li>
+</ul>
+</li>
+<li>图像间任务 inter-image tasks
+<ul>
+<li>对抗学习 contrastive learning</li>
+</ul>
+</li>
+</ul>
+<h3><a id="%E6%8B%BC%E5%9B%BE%E4%BB%BB%E5%8A%A1" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>拼图任务</h3>
+<p><img src="media/16613241011552/16852942002789.png" alt="image-20211129192245829" /></p>
+<ol>
+<li>
+<p>把一个batch里的图像切割成若干patches</p>
+</li>
+<li>
+<p>把patches随机打乱顺序，然后<strong>拼接成原图大小，作为batch输入模型</strong></p>
+<blockquote>
+<p>使用拼接（montage）的好处：</p>
+</blockquote>
+<ul>
+<li>
+<p>和下游任务有相似的图像分辨率大小</p>
+</li>
+<li>
+<p>和最近的方法比较只需要一半的计算资源</p>
+</li>
+<li>
+<p>网络必须学习详细的图像内特征来区分一个图像中的不同patch，以及全局的图像间特征来将同一原始图像中的不同patch拉到一起</p>
+</li>
+</ul>
+<blockquote>
+<p>使用拼接的注意事项：</p>
+</blockquote>
+<ul>
+<li>根据消融实验表明，切成2x2的patch效果最好，切太多会增加拼图难度导致学习失败</li>
+<li>切割成有重叠部分的训练效果更好，因为有些图片变化太大。</li>
+</ul>
+</li>
+</ol>
+<h3><a id="%E7%BD%91%E7%BB%9C%E8%AE%BE%E8%AE%A1" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>网络设计</h3>
+<p><img src="media/16613241011552/16852942002842.png" alt="image-20211129192442850" /></p>
+<ol>
+<li>
+<p>特征提取：可以为任意特征提取框架</p>
+<blockquote>
+<p>以ResNet-50为例，其特征图为7x7</p>
+</blockquote>
+</li>
+<li>
+<p>解耦模块（无参）：将提取出的特征分成 \(n \times m \times m\) 条，对应图像的patches</p>
+<blockquote>
+<p>通过双线性插值（bilinear interpolation）将特征图补成8x8大小</p>
+<p>然后使用平均池化来降采样特征图得到 \(n \times m \times m\) 条维度为 \(\hat{c}\) 的向量</p>
+</blockquote>
+</li>
+<li>
+<p>MLP：用于聚类任务</p>
+<blockquote>
+<p>将每条向量嵌入长度为c的两层多层感知机</p>
+</blockquote>
+</li>
+<li>
+<p>FC：用于定位</p>
+<blockquote>
+<p>同时使用一个全连接层作为分类器来得到 logits</p>
+</blockquote>
+</li>
+</ol>
+<h3><a id="%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>损失函数</h3>
+<ol>
+<li>
+<p>聚类分支（\(\cal{L}_{clu}\)）</p>
+<p>作为一个有监督任务，使用对抗学习的方法，拉扯同图异图patches，使用余弦相似度度量patches的距离</p>
+</li>
+<li>
+<p>定位分支（\(\cal{L}_{loc}\)）</p>
+<p>作为一个分类任务，损失函数就用交叉熵损失</p>
+</li>
+<li>
+<p>拼图任务的目标函数（\(\cal{L} = α \cal{L}_{clu} + β \cal{L}_{loc} \)）</p>
+<p>本文实验中 α 和 β 都为1</p>
+</li>
+</ol>
+<h3><a id="%E5%AE%9E%E9%AA%8C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>实验</h3>
+<ol>
+<li>对比实验（linear evaluation）
+<ul>
+<li>拼图任务：JigPuz</li>
+<li>聚类方法：DeepCluster、SeLa</li>
+<li>对抗学习：SimCLR、MoCo</li>
+</ul>
+</li>
+<li>半监督学习
+<ul>
+<li>1%标签 / 10%标签</li>
+</ul>
+</li>
+<li>迁移学习
+<ul>
+<li>目标检测：[COCO]</li>
+<li>图像分类：[CIFAR-10\CIFAR100]</li>
+</ul>
+</li>
+</ol>
+<h3><a id="%E5%88%86%E6%9E%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>分析</h3>
+<ol>
+<li>
+<p>拼图输入</p>
+<p><img src="media/16613241011552/16852942002874.png" alt="image-20211129192442850" /></p>
+<p>小图快，大图准；拼图又快又准。</p>
+</li>
+<li>
+<p>数据增强（color jitter \ position）</p>
+<p><img src="media/16613241011552/16852942002911.png" alt="image-20211129192442850" /></p>
+</li>
+<li>
+<p>切分操作</p>
+<p><img src="media/16613241011552/16852942002951.png" alt="image-20211129192442850" /></p>
+</li>
+<li>
+<p>两个分支</p>
+<p><img src="media/16613241011552/16852942002995.png" alt="image-20211129192442850" /></p>
+<p>聚类分支学习 instance- and image-level 特征</p>
+<p><strong>定位分支辅助学习细节位置信息</strong></p>
+</li>
+</ol>
+<h3><a id="%E7%BB%93%E8%AE%BA" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>结论</h3>
+<p>：我们的方法训练的模型可以在训练过程中以单批方式学习图像内和图像间的信息。我们的方法在很大程度上超过了以前的单批方法，并且只用一半的训练批次就取得了与双批方法相当的结果。我们的方法自然适用于其他任务。</p>
+<p>：我们的工作表明，耐人寻味的是，单批方法有可能与双批方法持平，甚至超过双批方法。我们相信这条路线值得进一步研究。可以预期会有新的应用。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Chen et al. - 2021 - Pre-Trained Image Processing Transformer]]></title>
+    <link href="https://costinyuan.com/16613240463331.html"/>
+    <updated>2022-08-24T14:54:06+08:00</updated>
+    <id>https://costinyuan.com/16613240463331.html</id>
+    <content type="html"><![CDATA[
+<h2><a id="about" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h2>
+<h3><a id="%E6%A0%87%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>标题</h3>
+<p>Pre-Trained Image Processing Transformer</p>
+<p>预训练图像处理的Transformer</p>
+<h3><a id="%E5%8F%91%E8%A1%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>发表</h3>
+<p>2021CVPR</p>
+<h3><a id="%E4%BD%9C%E8%80%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>作者</h3>
+<p>Chen, Hanting</p>
+<p>Wang, Yunhe：华为诺亚方舟实验室 北大哲学博士</p>
+<p>Guo, Tianyu</p>
+<p>Xu, Chang：悉尼大学计算机科学学院 研究员</p>
+<p>Deng, Yiping</p>
+<p>Liu, Zhenhua</p>
+<p>Ma, Siwei：北大信息科学技术学院 教授</p>
+<p>Xu, Chunjing</p>
+<p>Xu, Chao：北大电子工程与计算机科学学院 教授</p>
+<p>Gao, Wen</p>
+<h3><a id="%E7%BB%84%E7%BB%87%E6%9C%BA%E6%9E%84" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>组织机构</h3>
+<p>北大智能科学系机器视觉重点实验室；华为诺亚方舟实验室</p>
+<h2><a id="content" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Content</h2>
+<h3><a id="%E7%A0%94%E7%A9%B6%E8%83%8C%E6%99%AF" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>研究背景</h3>
+<h4><a id="%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>图像处理</h4>
+<ul>
+<li>图像处理是更全面的图像分析或计算机视觉系统的低层次部分的一个组成部分。图像处理的结果可以在很大程度上影响后续的高层部分对图像数据进行识别和理解。</li>
+<li>深度学习已被广泛应用于解决低层次的视觉任务，如图像的超分辨率、绘画、去伪存真和着色。</li>
+<li>由于许多图像处理任务是相关的，因此很自然地期望在一个数据集上预先训练的模型能对另一个数据集有所帮助。</li>
+<li>很少有研究将预训练推广到整个图像处理任务。</li>
+</ul>
+<blockquote>
+<p>目前图像处理存在的挑战</p>
+</blockquote>
+<ol>
+<li>针对特定任务的图像数据有限（特别是需要付费或者私密的，如医疗）</li>
+<li>图像处理工作的类型在给出测试图像前是未知的</li>
+</ol>
+<h4><a id="transformer-cv" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Transformer &amp; CV</h4>
+<ul>
+<li>第一类：在传统的卷积神经网络中引入自注意力机制
+<ul>
+<li>Yuan等人为图像分割引入了空间注意力</li>
+<li>Fu等人提出DANET，通过结合空间和通道注意力，充分利用上下文信息</li>
+<li><strong>Wang、Chen、Zhang等人通过自注意力机制增强特征，来提高几个高级视觉任务上的性能</strong></li>
+</ul>
+</li>
+<li>第二类：用自注意力区块代替卷积神经网络
+<ul>
+<li>Kolesnikov、Dosovitskiy用transformer区块进行图像分类工作</li>
+<li><strong>Carion、Zhu等人在检测任务中应用了基于transformer的模型</strong></li>
+<li>Chen等人提出了一个预训练的GPT模型用于生成和分类任务</li>
+<li>Wu和Zhao等人提出图像识别的预训练模型的预训练方法</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>目前有关CV的Transformer存在的问题</p>
+</blockquote>
+<ol>
+<li>基本都是在研究的预测试分类任务，输入和输出都是图像，直接应用这些现有的预训练策略可能是不可行的</li>
+<li>如何在预训练阶段有效地解决不同的图像处理任务，仍然是一个很难的挑战</li>
+</ol>
+<h3><a id="image-processing-transformer" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Image Processing Transformer</h3>
+<h4><a id="%E7%BB%93%E6%9E%84" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>结构</h4>
+<blockquote>
+<p><em>multiple pairs of head and tail corresponding to different tasks and a single shared body</em></p>
+</blockquote>
+<p><img src="media/16613240463331/16852928032975.png" alt="image-20211019155357599" /></p>
+<h4><a id="head" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>head</h4>
+<h4><a id="encoder" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>encoder</h4>
+<h4><a id="decoder" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>decoder</h4>
+<h4><a id="tail" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>tail</h4>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Razvan et al. - 2021 - Sequential Graph Convolutional Network for Active Learning]]></title>
+    <link href="https://costinyuan.com/16613238999782.html"/>
+    <updated>2022-08-24T14:51:39+08:00</updated>
+    <id>https://costinyuan.com/16613238999782.html</id>
+    <content type="html"><![CDATA[
+<h2><a id="about" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h2>
+<h3><a id="%E6%A0%87%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>标题</h3>
+<p>Sequential Graph Convolutional Network for Active Learning</p>
+<p>用于主动学习的序列图卷积网络</p>
+<h3><a id="%E5%8F%91%E8%A1%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>发表</h3>
+<p>2021 CVPR</p>
+<h3><a id="%E4%BD%9C%E8%80%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>作者</h3>
+<p>Razvan Caramalau：伦敦帝国理工学院</p>
+<p>Binod Bhattarai：伦敦帝国理工学院 博士后</p>
+<p>Tae-Kyun Kim：伦敦帝国理工学院 副教授 | 韩国科学技术院</p>
+<h3><a id="%E5%9B%A2%E9%98%9F" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>团队</h3>
+<p>伦敦帝国理工学院 电子电器学院</p>
+<h3><a id="%E6%94%AF%E6%8C%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>支持</h3>
+<p>Huawei Technologies Co.</p>
+<p>UKRI EPSRC Programme Grant</p>
+<h3><a id="%E5%85%B3%E9%94%AE%E7%82%B9" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>关键点</h3>
+<p>图像分类、三维手势估计</p>
+<h2><a id="related" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Related</h2>
+<h3><a id="gnn" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>GNN</h3>
+<p><img src="media/16613238999782/16852934545228.png" alt="image-20211102155648278" /></p>
+<p><img src="media/16613238999782/16852934545257.png" alt="image-20211102155710316" /></p>
+<p><img src="media/16613238999782/16852934545293.png" alt="image-20211102155752804" /></p>
+<ol>
+<li>计算loss优化参数进行<strong>分类</strong>	2. 通过对比两个节点的特征进行<strong>关联预测</strong></li>
+</ol>
+<blockquote>
+<p>归根到底，GNN就是特征提取的方法。如果按照 \(f\) 分类，其可以分成以下类型：</p>
+</blockquote>
+<p><img src="media/16613238999782/16852934545340.png" alt="image-20211102164428638" /></p>
+<h3><a id="gcn" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>GCN</h3>
+<p><a href="https://zhuanlan.zhihu.com/p/112277874">https://zhuanlan.zhihu.com/p/112277874</a></p>
+<h4><a id="%E8%81%9A%E5%90%88%EF%BC%9A%E5%B9%B3%E5%9D%87%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>聚合：平均法</h4>
+<p>邻居的平均 + 单位矩阵（身份矩阵/自己的特征）</p>
+<h4><a id="%E5%B9%B3%E5%9D%87%E6%B3%95%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>平均法问题及解决</h4>
+<p><img src="media/16613238999782/16852934545388.png" alt="" /></p>
+<h3><a id="%E4%B8%BB%E5%8A%A8%E5%AD%A6%E4%B9%A0active-learning" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>主动学习 Active Learning</h3>
+<ul>
+<li>学习者 learner：被训练来最小化目标任务的模型</li>
+<li>采样者 sampler：在固定预算内选择有代表性的未标记的例子</li>
+<li>注释者 annotator：给查询的数据贴上标签</li>
+</ul>
+<p>分类：任务依赖型（task-dependent）和任务诊断型（ task-agnostic）</p>
+<h2><a id="content" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Content</h2>
+<h3><a id="%E6%96%B9%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>方法</h3>
+<p><img src="media/16613238999782/16852934545442.png" alt="image-20211028124912454" /></p>
+<h4><a id="learner%E6%8F%90%E5%8F%96%E7%89%B9%E5%BE%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>learner -- 提取特征</h4>
+<p>本文的学习者同时考虑了分类和回归任务</p>
+<h5><a id="%E5%88%86%E7%B1%BB%E4%BB%BB%E5%8A%A1" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>分类任务 :</h5>
+<p>一个CNN图像分类器，可以用任意深度模型（ResNet-18）</p>
+<h5><a id="%E5%9B%9E%E5%BD%92%E4%BB%BB%E5%8A%A1%EF%BC%9A" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>回归任务：</h5>
+<p>本文为解决3D手势问题（从深度图像中估计手部关节的三维坐标），使用了一个众所周的的DeepPrior框架做模型</p>
+<h4><a id="sampler-uncertaingcn-coregcn" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>sampler -- UncertainGCN / CoreGCN</h4>
+<ol>
+<li>采用最近流行的 pool-based 方法：从unlabeled的数据集中随机选择一组数据进行labelling</li>
+</ol>
+<blockquote>
+<p>目的是为了最小化 Active Learning stages，以便更少的样本需要被注释</p>
+</blockquote>
+<ol start="2">
+<li>
+<p>为了避免over-smoothing，使用了一个两层结构：\( f_g = σ(θ_2(ReLU(θ_1A)A))\)</p>
+<ul>
+<li>第一个是正常GCN层 + 一个修正线性单元激活（rectiﬁed linear unit activation）</li>
+<li>第二个是一个sigmoid激活函数</li>
+</ul>
+<p>实验中还使用了dropout</p>
+</li>
+<li>
+<p>训练好GCN后开始进行选择</p>
+<ul>
+<li>UncertainGCN方法：选择分数最接近0的样本</li>
+<li>CoreGCN方法（高性能）：基于CoreSet，计算设置在GCN第一层结构后特征的欧式距离</li>
+</ul>
+</li>
+</ol>
+<p><img src="media/16613238999782/16852934545503.png" alt="image-20211102134427819" /></p>
+<h3><a id="%E5%AE%9E%E9%AA%8C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>实验</h3>
+<h4><a id="%E5%88%86%E7%B1%BB%E4%BB%BB%E5%8A%A1" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>分类任务</h4>
+<p><img src="media/16613238999782/16852934545572.png" alt="image-20211103122620085" /></p>
+<h4><a id="%E5%9B%9E%E5%BD%92%E4%BB%BB%E5%8A%A1" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>回归任务</h4>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ma et al. - 2017 - Towards Better Understanding the Clothing Fashion]]></title>
+    <link href="https://costinyuan.com/16613236876720.html"/>
+    <updated>2022-08-24T14:48:07+08:00</updated>
+    <id>https://costinyuan.com/16613236876720.html</id>
+    <content type="html"><![CDATA[
+<h2><a id="about" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h2>
+<h3><a id="%E6%A0%87%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>标题</h3>
+<p>Towards Better Understanding the Clothing Fashion Styles: A Multimodal Deep Learning Approach</p>
+<p>争取更好地理解服装的时尚风格：一个多模态深度学习的方法</p>
+<h3><a id="%E5%8F%91%E8%A1%A8%E6%97%B6%E9%97%B4%E6%9C%9F%E5%88%8A" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>发表时间期刊</h3>
+<p>2017年 AAAI</p>
+<h3><a id="%E4%BD%9C%E8%80%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>作者</h3>
+<p>Yihui Ma：清华大学计算机科学与技术系</p>
+<p><a href="http://hcsi.cs.tsinghua.edu.cn/jiajiaabout">Jia Jia</a>*：清华大学计算机科学与技术系博士生导师、副教授</p>
+<p>Suping Zhou：北京邮电大学</p>
+<p>Jingtian Fu：清华大学计算机科学与技术系，清华大学美术学院</p>
+<p>Yejun Liu：清华大学计算机科学与技术学院，清华大学美术学院</p>
+<p>Zijian Tong：搜狗公司</p>
+<h3><a id="%E5%AE%9E%E9%AA%8C%E5%AE%A4" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>实验室</h3>
+<p>清华大学信息科学与技术国家实验室（TNList）<em>Key Laboratory of Pervasive Computing</em></p>
+<h2><a id="content" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Content</h2>
+<h3><a id="%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>基本概念</h3>
+<p>视觉特征：领口形状、裤子长度、颜色主题等</p>
+<p>服装风格：浪漫、优雅、经典等</p>
+<p><strong>服装时尚风格在很大程度上得益于视觉细节，如何弥合两者的差距？</strong></p>
+<h3><a id="%E8%BF%87%E5%8E%BB%E7%9A%84%E7%A0%94%E7%A9%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>过去的研究</h3>
+<ul>
+<li>
+<p>解析服装纹理属性（2014）</p>
+</li>
+<li>
+<p>建议综合应用系统来共同解析一组服装图像（2015）</p>
+</li>
+<li>
+<p>专注于面向场景的服装推荐（2012）</p>
+</li>
+<li>
+<p>欣赏上身男装的审美效果（2016）：<em>不具有普遍性，忽略了上下搭配的影响</em></p>
+</li>
+</ul>
+<h3><a id="%E4%B8%A4%E4%B8%AA%E6%8C%91%E6%88%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>两个挑战及解决办法</h3>
+<p>Q1：如何定量描述各种服装的时尚风格？</p>
+<p>A1：建立基于小林美学理论的时尚语义空间（FSS）来定量描述服装风格</p>
+<blockquote>
+<p>什么是FSS?</p>
+<p>它是一个二维图像尺度的空间（warm-cool and soft-hard），包含购物网站上的数百个词。基于FSS不仅可以对时尚搭配进行定量评估，还可以直观地分析时尚潮流的动态变化。</p>
+</blockquote>
+<p>Q2：如何建立视觉特征和时尚风格之间的微妙关系（特别是服装搭配）？</p>
+<p>A2：提出了一个基于时尚的多模态深度学习模型--双模态相关深度自动编码器（BCDA）来捕捉服装搭配中的相关性，与回归相连接，以实现将视觉特征映射到FSS的任务</p>
+<blockquote>
+<p>该BCDA有什么特点？</p>
+<p>将<strong>上衣和下装</strong>看作服装搭配的两个模态，利用多模态深度学习的共享表述来学习模态之间的关系。此外，通过将服装类别（西装、大衣、紧身裤等）作为相关标签改进特征学习过程</p>
+</blockquote>
+<h3><a id="%E5%AE%9E%E9%AA%8C%E6%96%B9%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>实验方法</h3>
+<h4><a id="1%E5%BB%BA%E7%AB%8B%E6%97%B6%E5%B0%9A%E8%AF%AD%E4%B9%89%E7%A9%BA%E9%97%B4-fss" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. 建立时尚语义空间FSS</h4>
+<p>0）语义空间是小林在1995年提出的一个针对艺术设计的概念，将180个关键词放在划分为16个审美类别的尺度空间坐标中。</p>
+<p>1）将亚马逊网站上近三年的服装类的评论中的词语划分出来</p>
+<p>2）使用WordNet（1995），重训练形容词</p>
+<p>3）人工移除不常用的形容词（比如 happy、sad），获得527个形容服装风格的词汇</p>
+<p>4）使用WordNet::Similarity（2004）计算关键词与美学词的语义距离，选择三个距离最短的关键词，它们的加权算术平均值可以被视为坐标值</p>
+<p>![](<a href="https://picb.oss-cn-beijing.aliyuncs.com/img/2021/09/image-20210928135259510.png">https://picb.oss-cn-beijing.aliyuncs.com/img/2021/09/image-20210928135259510.png</a>&quot; alt=&quot;image-20210928135259510&quot; style=&quot;zoom:50%;&quot; /&gt;</p>
+<h4><a id="2%E5%BB%BA%E7%AB%8B%E5%8F%8C%E6%A8%A1%E6%80%81%E7%9B%B8%E5%85%B3%E6%B7%B1%E5%BA%A6%E8%87%AA%E5%8A%A8%E7%BC%96%E7%A0%81%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. 建立双模态相关深度自动编码器</h4>
+<p>0）传统的深度自动编码器是一种特征学习的方式，但无法用来发现上装和下装的内在关系。</p>
+<p>1）改造双模态深度自动编码器（2011）用于服装的特征学习，将上下衣特征作为两个模态输入，通过中间隐藏层的编码网络和解码网络，输出共享的表征（middle layer）</p>
+<blockquote>
+<p>相邻两层之间的关系取决于模型参数。训练结束后，我们确定参数并学习中间表征作为该步骤的输出。</p>
+</blockquote>
+<p>2）由于时尚风格受服装类别影响大（2016 具有相似视觉特征的服饰是不同的类别，比如西装和大衣），所以将服装类别标签引入到原始的对称结构中（黄色部分），使用神经网络重新获得相关标签c，同时重建特征x（体现在cost function代价函数中）</p>
+<p><img src="media/16613236876720/16852944474465.png" alt="" /></p>
+<h4><a id="3%E8%AE%AD%E7%BB%83-bcda" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. 训练BCDA</h4>
+<p>为了捕捉服装搭配中顶部和底部的内部相关性，我们通过预处理数据集来影响BCDA的训练过程：</p>
+<p>将数据集特征（通过CNN模型 2015）分成三份，一份完整，一份去掉下装特征，一个去掉上衣特征，训练编码器，直到获得三个完整的数据集。如此BCDA就学会了自动服装搭配的潜在规则</p>
+<p><img src="media/16613236876720/16852944474499.png" alt="" /></p>
+<blockquote>
+<p>在监督训练期间，算法只提供一种模式（如音频）的数据，然后只在另一种模式（如视频）上测试</p>
+<p>Ngiam, J.; Khosla, A.; Kim, M.; Nam, J.; Lee, H.; and Ng, A. Y. 2011. Multimodal deep learning. In International Conference on Machine Learning, ICML 2011,</p>
+</blockquote>
+<h4><a id="4%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. 回归模型</h4>
+<p>在FSS的527个风格词 Y(wc, hs) 中选择一个与BCDA输出特征 h^[Hh/2] 的欧氏距离最短的词作为输入图像的时尚风格标签</p>
+<h3><a id="%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C%E5%92%8C%E5%88%86%E6%9E%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>实验结果和分析</h3>
+<blockquote>
+<p>验证标准：计算了预测的坐标值和注释的坐标值之间的误差。误差用平均平方误差（MSE）来衡量。所有的实验都是在5个文件夹的交叉验证下进行</p>
+</blockquote>
+<h4><a id="1%E6%A8%A1%E5%9E%8B%E8%A1%A8%E7%8E%B0" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. 模型表现</h4>
+<p>1）与其他自动编码器比较（回归模型都用SVM）</p>
+<p>2）与其他回归模型比较（自动编码器都用BCDA）</p>
+<p><img src="media/16613236876720/16852944474551.png" alt="" /></p>
+<h4><a id="2%E7%89%B9%E5%BE%81%E8%B4%A1%E7%8C%AE%E5%88%86%E6%9E%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. 特征贡献分析</h4>
+<p>1）上衣特征贡献大于衣</p>
+<p>2）图案特征贡献大于颜色</p>
+<p><img src="media/16613236876720/16852944474591.png" alt="" /></p>
+<h4><a id="3%E5%8F%82%E6%95%B0%E6%95%8F%E6%84%9F%E5%88%86%E6%9E%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. 参数敏感分析</h4>
+<p>1）训练数据规模：规模越大效果越好，但超过25000几乎收敛</p>
+<p>2）隐藏层数量（理论上BCDA的描述能力可以通过更多层提高）：层数少于5时，性能会提高，层数过多性能会变差</p>
+<p><img src="media/16613236876720/16852944474627.png" alt="" />&quot; alt=&quot;image-20210928160415779&quot; style=&quot;zoom:50%;&quot; /&gt;</p>
+<h3><a id="%E5%AE%9E%E4%BE%8B%E8%AE%BA%E8%AF%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>实例论证</h3>
+<h4><a id="1%E4%B8%8D%E5%90%8C%E5%93%81%E7%89%8C%E7%9A%84%E6%97%B6%E5%B0%9A%E9%A3%8E%E6%A0%BC%E5%88%86%E5%B8%83" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. 不同品牌的时尚风格分布</h4>
+<p>Missoni - 华丽；Libertine - 古典；6379 - 自然；Brunello Cucinelli - 别致</p>
+<p><img src="media/16613236876720/16852944474673.png" alt="" /></p>
+<h4><a id="2%E5%90%8C%E4%B8%80%E5%93%81%E7%89%8C%E4%B8%8D%E5%90%8C%E5%B9%B4%E5%88%86%E9%A3%8E%E6%A0%BC%E5%AF%B9%E6%AF%94" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. 同一品牌不同年分风格对比</h4>
+<p>著名品牌的时尚趋势一直是时尚人士关注的热点，分析Givenchy在过去11年的风格变化，2005年稳重--2010年精致--2015年线条感强</p>
+<p><img src="media/16613236876720/16852944474760.png" alt="" /></p>
+<h4><a id="3%E6%8C%96%E6%8E%98%E6%90%AD%E9%85%8D%E8%A7%84%E5%88%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. 挖掘搭配规则</h4>
+<p>上衣领和下装的共同发生矩阵，每一列总和都是1，可以观察到：</p>
+<p>1.直筒裤几乎适合所有领型的上衣</p>
+<p>2.虽然直筒裤和各种领子都很配，但紧身裤相配的毛皮/高跟/圆领/巴托也是不错的选择此外，紧身裤-宽浅领口比直筒裤-宽浅领口的有更高的概率。因此，Bateau-tight也是时装秀中的一个经典搭配。</p>
+<p>根据此发现，使用本模型建立了一个叫Magic Mirror（2016）的应用程序，可以帮助人们分析服装时尚风格</p>
+<p><img src="media/16613236876720/16852944474855.png" alt="" /></p>
+<h3><a id="%E8%B4%A1%E7%8C%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>贡献</h3>
+<ol>
+<li>
+<p>一个服装时尚数据集（开放），包含10年《vogue》杂志的32133张男女全身时装秀图片，并有完整的视觉特征（颜色、图案、服装种类）和时尚风格标签（10男10女从FSS中选词 颗粒度0.001 每张照片的每个属性都有3个不同标注者标注然后平均）</p>
+<p><img src="media/16613236876720/16852944474948.png" alt="" /></p>
+</li>
+<li>
+<p>建立一个通用的时尚语义空间来定量描述服装风格。它是一个二维图像尺度的空间，包含购物网站上的数百个词。基于FSS不仅可以对时尚搭配进行定量评估，还可以直观地分析时尚潮流的动态变化。</p>
+</li>
+<li>
+<p>提出了一个基于时尚的多模态深度学习模型--双模态相关深度自动编码器（BCDA），与回归相连接，以实现将视觉特征映射到FSS的任务。具体来说，利用多模态策略学到的共享表征，BCDA可以充分利用上衣和下装之间的内部关联，并解决服装搭配的问题。</p>
+</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[从健身房到Switch——疫情下的日常健身]]></title>
+    <link href="https://costinyuan.com/16293554956534.html"/>
+    <updated>2021-08-19T14:44:55+08:00</updated>
+    <id>https://costinyuan.com/16293554956534.html</id>
+    <content type="html"><![CDATA[
+<blockquote>
+<p>前言</p>
+</blockquote>
+<p>本人有一年健身史，请过私教。后因为学习工作原因停止了一年，现在闲下来后，身材早已走样，还总感觉身上不舒服，于是又开始恢复日常运动。主要是使用switch平台和keep上的免费课程。</p>
+<h2><a id="%E4%B8%AA%E4%BA%BA%E8%AE%BE%E5%A4%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>个人设备</h2>
+<ul>
+<li>iPhone XS：安装有 Keep 软件，连接体脂秤记录体重</li>
+<li>小米手环4：之前去健身房会用，现在在家运动几乎不用，成了公交卡</li>
+<li>Nintendo Switch：主要设备，家里唯一的游戏主机，有《舞力全开2021》、《有氧拳击2 demo》、《健身环大冒险》</li>
+<li>Dell U2720Q显示器：戴尔4k显示器，有90w c口供电连接我的MacBook和switch游戏主机</li>
+<li>小米电视：不知道啥型号，1080p分辨率，非常适合连switch，但是不能独享，下有keep软件</li>
+</ul>
+<h2><a id="%E5%81%A5%E8%BA%AB%E6%88%BF" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>健身房</h2>
+<p><strong>结论</strong>：健身房可以说是最适合<strong>塑形增肌</strong>的地方了，买课的话适合初学者，不然还是要有一定健身基础。</p>
+<p>第一次进健身房就是冲着办卡的哈哈哈，上了一次体验课果断充值20节课（后来感觉买多了）。私教会帮忙制定训练计划，提供器械和动作指导以及饮食建议。因为当时比较瘦，所以配合蛋白粉增加营养摄入。</p>
+<p>一周3-4练，训练半年后身材变化还是很明显的，基本的轮廓都出来了，中期发现蛋白粉效果不显著，换了碳水含量更高的增肌粉，整个人壮了一圈。效果还是很满意的，就是课买多了。到了后期自己根据视频网站里的一些大佬们的视频自己制定计划，建议买课买14节差不多了。</p>
+<p>因为有教练带，所以只使用了小米手环，打开小米手环的自由训练模式，可以记录心率，消耗的卡路里等，看看就好哈哈。</p>
+<h2><a id="keep" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Keep</h2>
+<p><strong>结论</strong>：keep的课程其实都蛮好的，只需要一台手机/电视，和一个瑜伽垫就行了。对于<strong>塑形减脂</strong>有一定效果，适合有初学者和有一定基础的人。</p>
+<p>我上过keep上的HIIT燃脂、腹肌撕裂者、徒手胸肌训练、家庭增肌特训等课程。课程分为初级、中级、高级，一节课的时间在10-30分钟不等。我一般做初级或者中级的课程，高级实在是太累了，没办法坚持到结束。</p>
+<p>之前没时间去健身房的时候会用keep，根据自己想要练的部位或者环境选择课程，做完第二天会感觉酸痛，但是效果和健身房相比还是差不少。我现在喜欢使用keep的尊巴课程和户外跑课程。</p>
+<h2><a id="nintendo-switch" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Nintendo Switch</h2>
+<p>我在2020年2月初购入港版switch，同时购入了数字版的《舞力全开 2020》。玩了几个月累计40多小时吧（因为下了2021把2020删了，没有了记录），感觉还不错，2020年黑五入了《舞力全开2021》2021年初老任出了《有氧拳击2》，我下载的demo试玩了三天。同时在pdd花了500r购入了《健身环大冒险》。</p>
+<h3><a id="%E3%80%8A%E8%88%9E%E5%8A%9B%E5%85%A8%E5%BC%80%E3%80%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>《舞力全开》</h3>
+<p><strong>感受</strong>：如果喜欢音乐，没事喜欢跟着晃两下，那么不要错过育碧家的年货产品《舞力全开》。（个人对2021的歌单不太感冒，虽然买了，但玩的动力不大，可能要看看歌单有没有很多熟悉的喜欢的歌吧。）我买的都是数字版，并都领取了一个月的unlimited会员，可以体验到除了本年度歌曲外之前版本的所有歌曲和本年度的会员歌曲。</p>
+<p><strong>体验</strong>：开始喜欢玩世界舞台（需加速器联网），但是发现里面只有今年的歌曲，而且两场中间的休息时间太长了，于是后来都玩歌单。歌单每天会刷新，时长为20-40分钟不等，我一般选30min+的。通过开启甩汗模式，看到消耗的卡路里大概在100-250之间。（后来感觉这个不太准，高了许多的样子。并未实际测试。）</p>
+<p><strong>结论</strong>：其实舞力全开算是很好坚持的了，游戏中不会累到无法坚持，第二天也不会有什么疼痛感。一段时间后，体重减少，明显看着比以前瘦了很多，效果较好。但是不会增加什么肌肉，所以同期需要控制饮食。</p>
+<h3><a id="%E3%80%8A%E6%9C%89%E6%B0%A7%E6%8B%B3%E5%87%BB2%E3%80%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>《有氧拳击2》</h3>
+<p><strong>感受</strong>：之前有看到过《有氧拳击》的截图，感觉像是上个世纪魂斗罗后出来的游戏，画质不太好的亚子。2021年，老任推出了“全新”的《有氧拳击2》，并提供demo试玩。我就跑去试了试。短短三天的体验，竟让我对《有氧拳击2》的喜爱超过了《舞力全开2021》。虽说是“无实物表演”没有拳拳到肉的感觉，但那种想着punch那些让自己的不爽的人和事，着实让人越打越上头，能限制你发挥的也只有你的体能了（还有废话特别多的“教练”）。等折扣了可以入一个数字版。</p>
+<p><strong>体验</strong>：《有氧拳击2》进入游戏必须要进行每日打卡，新动作会在训练前进行教学，游戏模式类似体运动版的太鼓达人。自由运动中可以选择动作组合、运动强度和歌曲。一套组合的强烈运动模式下时间为10min+，如果是购入了正式版，可以选择多套组合组成训练。训练结束后会显示本次训练的有关信息，比如准确率，挥拳次数，消耗的热量，时间等。但是我也没太关注这些，打着爽就vans了。ps.训练中完成的成就可以换券给教练们换新衣服......</p>
+<p><strong>结论</strong>：有氧拳击2的画面提神比较大，但是换汤不换药，内容只是对一代的完善。不像舞力全开要提醒自己去打开运动，拳击2会让人盼望着去打开switch挥拳（笔者的生活是有多不顺啊），运动20多分钟会明显感觉有些累了，第二天睡醒会感到上肢肌肉酸痛。感觉比较适合想要塑形的人，如果想要减脂，可能需要更长时间的运动。</p>
+<h3><a id="%E3%80%8A%E5%81%A5%E8%BA%AB%E7%8E%AF%E5%A4%A7%E5%86%92%E9%99%A9%E3%80%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>《健身环大冒险》</h3>
+<p><strong>感受</strong>：去年由于疫情而炒起来的居家隔离神器，时隔一年终于恢复的正常的价格。到写本文时已经玩了4天了。感觉到目前为止，驱使我运动的还是新鲜感和那个放哪都很显眼的环......因为游戏过程实在是痛苦，不亚于去健身房撸铁，虽然这破塑料环还不能给你带来那种冰冷的钢铁触感，但是它就是有那种折磨你的能力。无论我再怎么抬起双腿，他还是在那慢慢蹦蹦跳跳？为什么这个游戏里任务的名字都这么奇怪？为什么运动能打人？习惯了这些诡异的设定，这还是款很值得购入的游戏。</p>
+<p><strong>体验</strong>：确认过一些个人信息以及运动能力后就可以进入冒险世界了。每次冒险的前都会有一段热身运动（我第一进行热身就把我累到了...），每个关卡由跑路、收集金币、打怪、奇怪剧情组成。主要花时间的还是打怪，那些奇怪的怪物血量出奇的厚，要选2-3个运动才能打到一个怪物，boss关的话会更多。跑步时间较短，如果喜欢跑步可以选跑步模式（如果不像太大动静可以把跑步换成微微下蹲）。运动有针对不同部位的高频锻炼，也有比较温和的瑜伽动作，会有动画提示和文字提示，动作的次数是根据最开始的运动能力测试给出的，第二天开始每次运动前会问是否要调整运动强度，也可以直接在设置里更改。（选择了动作以后似乎不能取消，休息一下后要含着泪做完），每完成一个关卡可以检测心率看运动强度。结束一天的训练后会有肌肉拉伸和每日的健康小知识。</p>
+<p><strong>结论</strong>：健身环大冒险的运动强度比较高，练完第二天必然浑身痛，可以时间久了会好些。适合有一定基础的人，初学者建议把强度调低一些以便坚持。健身环大冒险提供了一套完整的健身训练，从热身、运动、放松，其中穿插着的小提示和健康小知识，可以看出游戏还是十分用心的。半个小时多的运动（游戏内运动时间大概不到20分钟），可以满足一天的运动量。虽然每天身上都痛，但是对于锻炼肌肉、加强线条效果显著，提高肌肉含量可以提高代谢水平，让人不易发胖。（健身环大冒险会有很多腿部运动...深蹲100次可以获得“深蹲战士”的称号）。</p>
+<h2><a id="%E6%80%BB%E7%BB%93" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>总结</h2>
+<p>如果有时间并有良好的健身习惯，健身房是最好的选择，无论对增肌减脂都很好。</p>
+<p>keep适合没有太多时间的初学者进行健身学习和提升运动能力。</p>
+<p>switch的三款游戏各有特点，可以根据自己的情况和需求选择，也可以组合几款游戏一起使用。</p>
+<p>没事就运动一下，无论是对自己的身材还是健康都是有好处的。作为肥宅，我自己也不喜欢设置什么目标，但是不运动看看自己身上的肉又感觉很不爽，最后选择了switch作为我在现疫情时代的健身工具。</p>
+<p>以上是我作为非专业人士对健身房、软件、健身游戏的使用体验和感受。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Simo-Serra and Ishikawa - 2016 - Fashion Style in 128 Floats Joint Ranking and Cla]]></title>
+    <link href="https://costinyuan.com/16613236098475.html"/>
+    <updated>2022-08-24T14:46:49+08:00</updated>
+    <id>https://costinyuan.com/16613236098475.html</id>
+    <content type="html"><![CDATA[
+<h2><a id="about" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h2>
+<h3><a id="%E6%A0%87%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>标题</h3>
+<p>Fashion Style in 128 Floats: Joint Ranking and Classiﬁcation using Weak Data for Feature Extraction</p>
+<p>128位单精度浮点数的时装风格：使用联合排名和分类的方法从弱标签数据中提取特征</p>
+<h3><a id="%E5%8F%91%E5%88%8A%E6%97%B6%E9%97%B4" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>发刊时间</h3>
+<p>2016年CVPR</p>
+<h3><a id="%E4%BD%9C%E8%80%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>作者</h3>
+<p><a href="https://waseda.pure.elsevier.com/en/persons/edgar-simo-serra-2">Edgar Simo-Serra</a> 东京早稻田大学 基础科学和工程学院 副教授 （网站挺好看）</p>
+<p><a href="https://waseda.pure.elsevier.com/en/persons/hiroshi-ishikawa">Hiroshi Ishikawa</a> 东京早稻田大学 基础科学和工程学院 教授</p>
+<h2><a id="content" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Content</h2>
+<h3><a id="%E4%B9%8B%E5%89%8D%E7%9A%84%E7%9B%B8%E5%85%B3%E7%A0%94%E7%A9%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>之前的相关研究</h3>
+<ol>
+<li>
+<p>特征学习</p>
+<ul>
+<li>GIST：手动提取全局图像特征</li>
+<li>完全监督的深度学习网络从大量数据中获得中间表征（intermediate representations）：缺点是泛化能力差
+<ul>
+<li>最开始的 Alexnet</li>
+<li>有19层的 VGG</li>
+<li>每层中联合使用大小不同的卷积的Googlenet</li>
+<li>Chatfield对不同网络分析，引入瓶颈层（bottleneck layers）来提供不同尺寸的特征</li>
+</ul>
+</li>
+<li>无监督学习：缺点是缺乏标签，使任务复杂</li>
+</ul>
+</li>
+<li>
+<p>噪声标签/弱标签学习</p>
+<ul>
+<li>Xiao的方法需要50%的标签正确率，并且需要学习一个网络纠正噪音</li>
+<li>Frome使用图像+文本来训练有更多语义的分类器</li>
+</ul>
+</li>
+<li>
+<p>深度学习相似性（Deep Similarity）</p>
+<ul>
+<li>
+<p>不学习分类网络，而是使用深度神经网络直接学习相似性（聚类？）</p>
+</li>
+<li>
+<p>连体网络：单样本学习算法，一组输入被同时用来训练神经网络模型，损失激励相似的输入有相似的输出，不相似的输入有不同的输出，用于局部特征描述和获得产品图像表示</p>
+</li>
+<li>
+<p><a href="http://www.uml.org.cn/ai/202008251.asp">三重网络</a>：是连体网络的扩展，被成功用于人脸识别中。也是本文三联体图像比较方法的基础</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3><a id="%E6%88%91%E4%BB%AC%E7%9A%84%E7%9B%AE%E6%A0%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>我们的目标</h3>
+<p>利用弱标签/嘈杂标签数据，用深度网络学习紧凑的判别特征，然后用于其他具有挑战性的时尚相关任务，如风格分类</p>
+<p><em>由于最近（2012CVPR）才成为研究重点，所以本文将专注于时尚图像领域</em></p>
+<h3><a id="%E5%AD%98%E5%9C%A8%E7%9A%84%E6%8C%91%E6%88%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>存在的挑战</h3>
+<ol>
+<li>图像有些局部细节（如配饰）很难分割</li>
+<li>要考虑全局的属性（如服装风格），这些属性共同决定图像中的各种物品</li>
+<li>一般图像比例为3:4且颜色比较亮</li>
+<li><del>没有大型的完全标注的数据集</del>*（现在已经有了）*</li>
+</ol>
+<h3><a id="%E5%AE%9E%E9%AA%8C%E6%96%B9%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>实验方法</h3>
+<h4><a id="1%E8%81%94%E5%90%88%E6%8E%92%E5%90%8D%E5%92%8C%E5%88%86%E7%B1%BB" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. 联合排名和分类</h4>
+<blockquote>
+<p>排名</p>
+</blockquote>
+<p>1）对于标签，计算两两图片的弱标签的相似性度量r，低于相似阈值的为相似标签，高于不相似阈值的为不相似标签</p>
+<p>2）给噪音标签（labels）\(l\) 打标（tag），如果图像中含有该tag那就给相应的tag标记为1，没有就是0，$|l|$ 为每个label的tag=1数，利用每个图像的 $|l|$ 计算交并比（intersection over union）</p>
+<p>3）对于图像，使用特征提取网络提取三联图像的特征向量 \(\tau_f = (f_-,f,f_+)\) 作为输入，比较特征向量的欧式距离并做归一化处理*得到 \((d_-,d_+)\) ，使用排名损失 \(l_R\) 激励 \(d_+\) 和 \(d_-\) ，使得相似的图像更相似，不相似的图像更不相似</p>
+<p><img src="media/16613236098475/16852945503970.png" alt="" /></p>
+<p><img src="media/16613236098475/16852945504038.png" alt="" /></p>
+<p>想要 \(l_R = 0\) ，则需要 \(\parallel f_+-f \parallel_2 = 0\) 并且 \(\parallel f_--f \parallel_2 &gt; 0\)</p>
+<blockquote>
+<p>分类</p>
+</blockquote>
+<p>0）虽然排名损失足以用来学习鉴别性的特征，但作者发现，用分类损失来补充是至关重要的</p>
+<p>1）将不相似图像向量作为多标签分类器的输入（因为标准图像和相似图像要做训练集），得到一个给每个tag的值的预处理值 \(X_-\) ，使用多标签交叉墒误差</p>
+<p><img src="media/16613236098475/16852945504057.png" alt="" /></p>
+<blockquote>
+<p>联合</p>
+</blockquote>
+<p><img src="media/16613236098475/16852945504075.png" alt="" /></p>
+<p>\(\alpha\)  是平衡不同损失函数的权重，其中分类损失影响特征提取网络和分类网络，而排名损失只影响特征提取网络</p>
+<p><img src="media/16613236098475/16852945504092.png" alt="" /></p>
+<h4><a id="2%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96%E7%BD%91%E7%BB%9C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. 特征提取网络</h4>
+<p>依赖 Batch Normalization layers 学习，使用 Dropout 防止过拟合</p>
+<p><img src="media/16613236098475/16852945504113.png" alt="" /></p>
+<p>注意点1: 图像比例是3:4的</p>
+<p>注意点2: 使用的参数很少，只有1572544个，VGG16需要134260544个参数</p>
+<h4><a id="3%E5%88%86%E7%B1%BB%E7%BD%91%E7%BB%9C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. 分类网络</h4>
+<p>分类网络的目标是帮助特征提取网络的学习，而不是高分类性能。只包含一个batch normalization layer和一个linear unit layer和一个128隐藏单元 linear layer和最后一个linear unit layer，结构简单，参数少</p>
+<h4><a id="4%E8%81%94%E5%90%88%E8%AE%AD%E7%BB%83" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. 联合训练</h4>
+<p>1）两个网络都用反向传播算法训练，利用ADADELTA算法自适应设置学习率。对于图像的预处理只有从每个颜色通道中减去平均值并处以标准差</p>
+<p>2）初始化这两个网络，先用一个额外的全连接层训练分类的特征提取网络，一旦优化收敛，额外的分类层就会从特征提取网络中移除，分类网络则以随机权重加入</p>
+<p>3）对于输入的图像来说，不可能计算出所有图像的相似度量值，所以随机选一个标准图像，然后抽一个图像进行比较，根据阈值判断正负样本，已有则再抽一个</p>
+<h3><a id="%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C%E5%92%8C%E5%88%86%E6%9E%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>实验结果和分析</h3>
+<h4><a id="1%E6%95%B0%E6%8D%AE%E5%AF%B9%E6%AF%94" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. 数据对比</h4>
+<ul>
+<li>与公开的预训练的CNN和最先进的风格描述符基线进行比较，优于所有基线</li>
+<li>对时尚性的预测准确率指标上优于其他所有的方法</li>
+<li>在所有情况下，联合分类和排名方法都优于单独使用分类或排名损失，以及使用连体结构</li>
+</ul>
+<h4><a id="2%E9%80%9A%E8%BF%87%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%BF%9B%E8%A1%8C%E5%8F%AF%E8%A7%86%E5%8C%96-https-blog-csdn-nettina-ttlarticledetails52048765" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. 通过描述符进行<a href="https://blog.csdn.net/tina_ttl/article/details/52048765">可视化</a></h4>
+<p>![](<a href="https://picb.oss-cn-beijing.aliyuncs.com/img/2021/10/image-20211013100845148.png">https://picb.oss-cn-beijing.aliyuncs.com/img/2021/10/image-20211013100845148.png</a>&quot; alt=&quot;image-20211013100845148&quot; style=&quot;zoom:50%;&quot; /&gt;</p>
+<p>通过显示规范和投射到<a href="https://zh.wikipedia.org/wiki/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90">主成分分析</a>坐标系（PCA basis）上考虑整个风格描述符的输出</p>
+<p>1）在输入图像周围滑动一个48×48的边界框，并计算输入图像的平均颜色，然后计算 <em>风格描述符</em>。</p>
+<p>2）将得到的描述符与原始图像描述符进行比较，并将其变化可视化。</p>
+<h4><a id="3%E9%A3%8E%E6%A0%BC%E5%8C%B9%E9%85%8D" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. 风格匹配</h4>
+<p><img src="media/16613236098475/16852945504140.png" alt="" /></p>
+<p>同样使用风格描述符进行可视化，不只考虑单一图像，而是考虑成对图像，采用两个不同图像（ \(I_1\) 和 \(I_2\) ）特征向量之间的差异评估这个向量和风格描述符 \(f(\cdot)\) ，计算在像素位置(u, v)的一个局部遮挡。</p>
+<p>这种局部异常相似性的概念是在没有任何像素级注释的情况下从嘈杂的用户提供的标签中自动学到的。</p>
+<h4><a id="4%E6%97%B6%E5%B0%9A%E9%A3%8E%E6%A0%BC%E7%A9%BA%E9%97%B4" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. 时尚风格空间</h4>
+<p><img src="media/16613236098475/16852945504178.png" alt="" /></p>
+<p>使用t-SNE从风格描述符中提取出可视的时尚风格空间。风格描述符可以使用欧氏距离进行比较，图为Hipster wars数据集中“pinup”分类的时尚风格空间可视化</p>
+<h3><a id="%E5%88%9B%E6%96%B0%E7%82%B9" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>创新点</h3>
+<ol>
+<li>使用网络上常见的大量弱标签数据，主要来自Paperdoll和Fashion 144k</li>
+<li>在较小的数据集上用较少的参数学习一个紧凑（128位）的模型</li>
+<li>通过欧式距离，定性分析的视觉化补充定量分析。提出了新的特征提取方法和新的可视化方法</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+</feed>
