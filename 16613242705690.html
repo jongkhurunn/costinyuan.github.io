@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+    Wu et al. - 2021 - ACTIVE LEARNING FOR GRAPH NEURAL NETWORKS VIA NODE FEATURE PROPAGATION - 原子集
+    
+    </title>
+    <link rel="shortcut icon" href="media/16853432384271/facicon-64x64.png" type="image/png" />
+
+    
+    
+    <link href="atom.xml" rel="alternate" title="原子集" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/style.min.css">
+    <link rel="stylesheet" href="asset/css/doc.css">
+    <script src="asset/app.js"></script>
+</head>
+  <body>
+    <section class="hero">
+      <div class="hero-head">
+          <nav class="navbar" role="navigation" aria-label="main navigation">
+              <div class="container">
+              <div class="navbar-brand">
+                
+                <a target="_self" class="navbar-item " href="index.html">Home</a>
+                
+                <a target="_self" class="navbar-item " href="archives.html">Archives</a>
+                
+                <a target="_self" class="navbar-item " href="about.html">About</a>
+                
+
+                <a role="button" id="navbarSNSRssSwitchBtn" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarSNSRssButtons">
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                </a>
+              </div>
+            
+              <div id="navbarSNSRssButtons" class="navbar-menu">
+                <div class="navbar-start">
+                  
+                </div>
+            
+                <div class="navbar-end">
+                  <div class="navbar-item">
+                    <!--buttons start-->
+                    <div class="buttons">
+                      
+                        
+                        
+                        
+                        <a href="https://github.com/jongkhurunn" target="_blank" title="github">
+                            <span class="icon is-large has-text-grey-darker">
+                               <svg class="svg-inline--fa fa-github fa-w-16 fa-lg" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fab fa-github fa-lg"></i> -->
+                            </span>
+                          </a>
+                        
+                        
+                      
+                      <a href="https://weibo.com/u/2378315157" target="_blank" title="weibo">
+                          <span class="icon is-large has-text-grey-darker">
+                            <svg class="svg-inline--fa fa-weibo fa-w-16 fa-lg" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="weibo" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M407 177.6c7.6-24-13.4-46.8-37.4-41.7-22 4.8-28.8-28.1-7.1-32.8 50.1-10.9 92.3 37.1 76.5 84.8-6.8 21.2-38.8 10.8-32-10.3zM214.8 446.7C108.5 446.7 0 395.3 0 310.4c0-44.3 28-95.4 76.3-143.7C176 67 279.5 65.8 249.9 161c-4 13.1 12.3 5.7 12.3 6 79.5-33.6 140.5-16.8 114 51.4-3.7 9.4 1.1 10.9 8.3 13.1 135.7 42.3 34.8 215.2-169.7 215.2zm143.7-146.3c-5.4-55.7-78.5-94-163.4-85.7-84.8 8.6-148.8 60.3-143.4 116s78.5 94 163.4 85.7c84.8-8.6 148.8-60.3 143.4-116zM347.9 35.1c-25.9 5.6-16.8 43.7 8.3 38.3 72.3-15.2 134.8 52.8 111.7 124-7.4 24.2 29.1 37 37.4 12 31.9-99.8-55.1-195.9-157.4-174.3zm-78.5 311c-17.1 38.8-66.8 60-109.1 46.3-40.8-13.1-58-53.4-40.3-89.7 17.7-35.4 63.1-55.4 103.4-45.1 42 10.8 63.1 50.2 46 88.5zm-86.3-30c-12.9-5.4-30 .3-38 12.9-8.3 12.9-4.3 28 8.6 34 13.1 6 30.8.3 39.1-12.9 8-13.1 3.7-28.3-9.7-34zm32.6-13.4c-5.1-1.7-11.4.6-14.3 5.4-2.9 5.1-1.4 10.6 3.7 12.9 5.1 2 11.7-.3 14.6-5.4 2.8-5.2 1.1-10.9-4-12.9z"></path></svg><!-- <i class="fab fa-weibo fa-lg"></i> -->
+                          </span>
+                      </a>
+                      
+                      <a href="atom.xml" target="_blank" title="RSS">
+                          <span class="icon is-large has-text-black-bis">
+                              <svg class="svg-inline--fa fa-rss fa-w-14 fa-lg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="rss" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M128.081 415.959c0 35.369-28.672 64.041-64.041 64.041S0 451.328 0 415.959s28.672-64.041 64.041-64.041 64.04 28.673 64.04 64.041zm175.66 47.25c-8.354-154.6-132.185-278.587-286.95-286.95C7.656 175.765 0 183.105 0 192.253v48.069c0 8.415 6.49 15.472 14.887 16.018 111.832 7.284 201.473 96.702 208.772 208.772.547 8.397 7.604 14.887 16.018 14.887h48.069c9.149.001 16.489-7.655 15.995-16.79zm144.249.288C439.596 229.677 251.465 40.445 16.503 32.01 7.473 31.686 0 38.981 0 48.016v48.068c0 8.625 6.835 15.645 15.453 15.999 191.179 7.839 344.627 161.316 352.465 352.465.353 8.618 7.373 15.453 15.999 15.453h48.068c9.034-.001 16.329-7.474 16.005-16.504z"></path></svg><!-- <i class="fas fa-rss fa-lg"></i> -->
+                          </span>
+                      </a>
+                    </div>
+                    <!--buttons end-->
+
+                  </div>
+                </div>
+                </div>
+              </div>
+            </nav>
+      </div>
+
+ <div class="hero-body ct-body"></div>
+      
+    </section>
+    <section class="ct-body">
+      <div class="container">
+          <div class="columns is-variable bd-klmn-columns is-4 is-centered">
+              <div class="column is-four-fifths">
+                  <div class="post-body single-content">
+                    
+                    <h1 class="title">
+                            Wu et al. - 2021 - ACTIVE LEARNING FOR GRAPH NEURAL NETWORKS VIA NODE FEATURE PROPAGATION   
+                      </h1>
+                     
+                    
+                      <div class="media">
+                            
+                            <figure class="media-left">
+                              <p class="image is-48x48">
+                                
+                                  <img class="is-rounded" src="media/16853432384271/favicon-240x240.png">
+                                
+                              </p>
+                            </figure>
+                            
+                            <div class="media-content">
+                              <div class="content">
+                                <p>
+                                 <span class="date">2022/08/24</span>
+                                  <span class="tran-posted-in">posted in</span>&nbsp; 
+                                  
+                                      <span class="posted-in"><a href='%E7%AC%94%E8%AE%B0.html'>笔记</a></span>
+                                         
+                                  
+
+                                   
+                                      
+                                  <br />
+                                  <span class="tran-tags">Tags:</span>&nbsp;
+                                  
+                                    <a class="tag is-link is-light" href='tag_GCN.html'>#GCN</a>
+                                     
+
+                                </p>
+                              </div>
+                            </div>
+                         
+                    </div>
+                </div>
+                  <article class="markdown-body single-content">
+                    <h2><a id="about" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h2>
+<h3><a id="%E6%A0%87%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>标题</h3>
+<p>ACTIVE LEARNING FOR GRAPH NEURAL NETWORKS VIA NODE FEATURE PROPAGATION</p>
+<p>通过节点特征传播实现图神经网络的主动学习</p>
+<h3><a id="%E6%9D%A5%E6%BA%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>来源</h3>
+<p>[2021 CVPR] Sequential Graph Convolutional Network for Active Learning 引用论文</p>
+<p>ArXiv ICLR 2020</p>
+<h3><a id="%E4%BD%9C%E8%80%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>作者</h3>
+<p>Yuexin, Wu</p>
+<p>Yichong, Xu：Ph.D. Carnegie Mellon University</p>
+<p>Aarti, Singh：Associate Professor, Carnegie Mellon University</p>
+<p>Yiming, Yang：Professor, Carnegie Mellon University</p>
+<p>Artur, Dubrawski：Director, Carnegie Mellon University</p>
+<h3><a id="%E6%9C%BA%E6%9E%84" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>机构</h3>
+<p>School of Computer Science, Machine Learning Department, Carnegie Mellon University</p>
+<h2><a id="content" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Content</h2>
+<h2><a id="%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>相关工作</h2>
+<h3><a id="active-learning" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Active Learning</h3>
+<ul>
+<li>早期的基于图结构数据的主动学习，通过图正则化来研究无参分类模型</li>
+<li>最近的研究是，开始分析在图信号处理框架中的主动采样</li>
+</ul>
+<p>这些研究都是关注于图信号平滑但节点特征标签有噪声的情况</p>
+<ul>
+<li>optimal experimental design可以用于数据解决线性回归问题</li>
+</ul>
+<p>但不能解决非线性无相关性标签的分类问题</p>
+<h3><a id="graph-neural-networks" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Graph Neural Networks</h3>
+<ul>
+<li>图神经网络自2017年兴起，他的变种多是多层架构，在每一层传递节点信息</li>
+<li>在最近的主动学习中使用GNN的研究中，提出了将不确定性、图中心性和信息密度线性结合，来获得最佳性能</li>
+<li>再就是通过可学习的基于多臂老虎机技术的权重联合来优化结果</li>
+</ul>
+<p>不同于结合不同参数的方法，本文从聚类传播节点特征作为切入。展示了我们的one-step主动设计在小标签环境下表现优于其他基于学习网络表现，并在大量标注数据中也不会降低表现</p>
+<h2><a id="%E5%87%86%E5%A4%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>准备</h2>
+<p>\(V = \{ 1, 2, ..., n\}\)</p>
+<p>\( G(V,E) = \begin{cases} x_i \in \mathcal{X} \subseteq \mathbb{R} ^d \\ y_i \in \mathcal{Y}=\{1,2,...,c\} \end{cases}\)</p>
+<p>\(x_i\) 是特征向量，\(y_i\) 是标签</p>
+<h4><a id="%E8%BE%93%E5%85%A5" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>输入</h4>
+<p>\(X = \begin{pmatrix} 1111\\2222\\....\\nnnn \end{pmatrix}_{n \times x}\)  一行就是一个节点的特征，一共n行</p>
+<p>\(Y= \begin{pmatrix} y_1,y_2,...,y_n \end{pmatrix}\) 每一个节点的标签</p>
+<h4><a id="%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>损失函数</h4>
+<p>\(\mathcal{L} (\mathcal{M} \mid G,X,Y) : \mathcal{M}\) 通过匹配G和X来预测向量 \(\hat{Y} \in \mathcal{Y}^n\)</p>
+<h4><a id="step-t" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step t</h4>
+<ol>
+<li>
+<p>选一个子集 \(S^t \subseteq \{1,2, ...,n\}\)</p>
+</li>
+<li>
+<p>\(S^t\) 中每一个数都对应一个随机选择的 \(y_i\)</p>
+</li>
+<li>
+<p>用 \(\eta_c(v)\) 表示节点v获得 y=c 的概率，则有 \(\eta(v) = (\eta_1(v),...,\eta_c(v))^T\)</p>
+</li>
+<li>
+<p>主动学习算法 \(\mathcal{A}\) 使用G, X和 \(y_i\) 对 \(i\in S^0 \bigcup S^1 \bigcup ... \bigcup S^t\) 作为训练集训练模型，使用训练算法 \(\mathcal{M}\) ，训练好的模型称为 \(\mathcal{M}_{A_t}\)，如果所有主动学习策略都用的训练算法 \(\mathcal{M}\)，那么就直接把\(\mathcal{M}_{A_t}\) 简写成\( \mathcal{A}_t\)</p>
+</li>
+<li>
+<p>我们的目标函数就成了 \(\min _{\mathbf{s}^0 \cup \cdots \cup \mathbf{s}^t} \mathbb{E}\left[l\left(\mathcal{A}_t \mid G, X, Y\right)\right]\) 由Y和 \(\mathcal{A}\) 提供随机性</p>
+<p>**我们要让图神经网络做\(\mathcal{M}\) **</p>
+</li>
+</ol>
+<h3><a id="%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%A1%86%E6%9E%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>图神经网络框架</h3>
+<p>图神经网络定义了一个多层特征传播过程就类似于MLPs，定义第k层表征矩阵为 \(X^{(k)}\)，\( X^{(0)}\) 就是输入的节点特征</p>
+<p>不同之处就是它定义的下层表示的递归函数</p>
+<p><img src="media/16613242705690/16852931035439.png" alt="" /></p>
+<p>而图卷积网络则定义为</p>
+<p><img src="media/16613242705690/16852931035515.png" alt="" /></p>
+<p><img src="media/16613242705690/16852931035534.png" alt="" /></p>
+<p>通过添加身份矩阵，类似于MLPs中的残差链接，绕过浅层表征到深层。GCN鼓励这样的到的深层表征共享</p>
+<p>对于分类任务，常使用一个softmax方法作为最后一层</p>
+<p><img src="media/16613242705690/16852931035552.png" alt="" /></p>
+<p>我们使用GCN作为统一 \(\mathcal{M}\) 模型在接下来的AL策略中</p>
+<h2><a id="al%E7%AD%96%E7%95%A5%E5%92%8C%E7%90%86%E8%AE%BA%E5%88%86%E6%9E%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>AL策略和理论分析</h2>
+<p>传统的AL算法一次只选一个实例进行标注，我们关注到“batch” one-step主动学习，一次性选出对所有节点有丰富信息的节点（也称为optimal experimental design），选取b个最有代表的节点作为batch，我们的目标函数就变成了</p>
+<p><img src="media/16613242705690/16852931035570.png" alt="" /></p>
+<h3><a id="featprop%E7%AE%97%E6%B3%95%E6%8F%8F%E8%BF%B0" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>FeatProp 算法描述</h3>
+<p>输入：特征矩阵X ，图矩阵G，预算b</p>
+<ol>
+<li>计算距离 \(d_{X,G}\)</li>
+<li>使用b中心的 \(d_{X,G}\) 矩阵做聚类</li>
+<li>挑选最接近聚类中心的\(s\)作为中心</li>
+<li>获得\(s\)中节点v们的标签 然后训练\(\mathcal{M}\)（GCN）</li>
+</ol>
+<p>输出：模型\(\mathcal{M}\)</p>
+<h4><a id="%E8%B7%9D%E7%A6%BB%E6%96%B9%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>距离方法</h4>
+<p>传统做法：$d_{(X,G)}(V_i,V_j) = |(S^KX)_i-(S^KX)_j|_2$</p>
+<p>对well-trained的网络有帮助，在训练初期非常不准确，选择不出有代表的节点，我们使用的是：</p>
+<p><img src="media/16613242705690/16852931035589.png" alt="" /></p>
+<p>\(S^KX\) 类似于去掉所有激活函数和层参数的简化GCN，这样可以去掉没训练的参数对距离计算的影响，依旧带着图结构进入计算，并且选出的节点会有很强的归纳偏置</p>
+<h4><a id="%E8%81%9A%E7%B1%BB%E6%96%B9%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>聚类方法</h4>
+<ul>
+<li>K-Means: 生成的中心节点可能是不存在的，就没办法进行label了</li>
+<li>K-Center</li>
+<li><strong>K-Medoids</strong>: 类似于K-Means，但是选出的节点一定是真实存在的</li>
+</ul>
+<h3><a id="%E5%88%86%E7%B1%BB%E6%8D%9F%E5%A4%B1%E8%BE%B9%E7%95%8C%E7%90%86%E8%AE%BA%E5%88%86%E6%9E%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>分类损失边界理论分析</h3>
+<p><img src="media/16613242705690/16852931035605.png" alt="" /></p>
+<p>Coreset 方法：找到一个训练集的 \(\delta-over\)</p>
+<p><img src="media/16613242705690/16852931035622.png" alt="" /></p>
+<p><img src="media/16613242705690/16852931035639.png" alt="" /></p>
+<p>由于<img src="media/16613242705690/16852931035656.png" alt="" /> ，所以可以看出K-Medoids比K-Center可以获得一个更好的边界</p>
+<blockquote>
+<p>K-Medoids对于红线平均值，而K-Center对应红线最大值</p>
+</blockquote>
+<p><img src="media/16613242705690/16852931035674.png" alt="" /></p>
+<h2><a id="%E5%AE%9E%E9%AA%8C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>实验</h2>
+<ol>
+<li>跑了四个网络数据集结果，CoraFull是一个高密度网络数据集，来描述在大尺度环境下的表现</li>
+</ol>
+<p><img src="media/16613242705690/16852931035693.png" alt="" /></p>
+<ol start="2">
+<li>比较使用FeatProp和Coreset算法使用的时间</li>
+</ol>
+<p><img src="media/16613242705690/16852931035714.png" alt="" /></p>
+<ol start="3">
+<li>在不同数量（10,20,40,80,160）的预算节点进行训练的平均Macro-F1</li>
+</ol>
+<p><img src="media/16613242705690/16852931035737.png" alt="" /></p>
+<ol start="4">
+<li>
+<p>与基线方法进行比较</p>
+<p><img src="media/16613242705690/16852931035760.png" alt="" /></p>
+</li>
+</ol>
+<h3><a id="%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>实验结果</h3>
+<p>我们一开始从池子里随机选出五个节点，使用五个不同的随机种子节点，将他们的平均分类准确率作为度量，实验结果均优于其他方法</p>
+<h3><a id="%E6%9C%AA%E6%9D%A5%E5%B7%A5%E4%BD%9C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>未来工作</h3>
+<p>FeatProp 仅侧重于对有意义的（图形）表示中的代表点进行采样，而基于不确定性的方法式从由标签引导的不同标准中选择主动节点，如何以有原则的方式将该类方法与 FeatProp 结合仍然是一个开放有趣的问题。</p>
+<h3><a id="%E6%83%B3%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>想法</h3>
+<p>本文没有入选的原因可能在于只提出了一个算法但没有实际应用，创新点不足，结构不完整。但GCN+AL在少标签的聚类工作中仍有很大的用武之地。相比消耗巨大的transformer，我觉得GCN更适合装备不足的情况，通过框架解决算力问题。上周的文章的framework依旧是我的basement。</p>
+
+                  </article>
+                  <div class="comments-wrap">
+                    <div class="share-comments">
+                      
+
+                      
+
+                      
+                    </div>
+                  </div><!-- end comments wrap -->
+              </div>
+            </div><!-- end columns -->
+      </div><!-- end container -->
+    </section>
+
+
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+          <p>
+              Copyright &copy; 2019
+              Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+              Theme used <a target="_blank" href="https://bulma.io/">Bulma CSS</a>.
+          </p>
+        </div>
+      </footer>
+
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+    Kaiming He et al. - 2021 - Masked Autoencoders Are Scalable Vision Learners - 原子集
+    
+    </title>
+    <link rel="shortcut icon" href="media/16853432384271/facicon-64x64.png" type="image/png" />
+
+    
+    
+    <link href="atom.xml" rel="alternate" title="原子集" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/style.min.css">
+    <link rel="stylesheet" href="asset/css/doc.css">
+    <script src="asset/app.js"></script>
+</head>
+  <body>
+    <section class="hero">
+      <div class="hero-head">
+          <nav class="navbar" role="navigation" aria-label="main navigation">
+              <div class="container">
+              <div class="navbar-brand">
+                
+                <a target="_self" class="navbar-item " href="index.html">Home</a>
+                
+                <a target="_self" class="navbar-item " href="archives.html">Archives</a>
+                
+                <a target="_self" class="navbar-item " href="about.html">About</a>
+                
+
+                <a role="button" id="navbarSNSRssSwitchBtn" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarSNSRssButtons">
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                </a>
+              </div>
+            
+              <div id="navbarSNSRssButtons" class="navbar-menu">
+                <div class="navbar-start">
+                  
+                </div>
+            
+                <div class="navbar-end">
+                  <div class="navbar-item">
+                    <!--buttons start-->
+                    <div class="buttons">
+                      
+                        
+                        
+                        
+                        <a href="https://github.com/jongkhurunn" target="_blank" title="github">
+                            <span class="icon is-large has-text-grey-darker">
+                               <svg class="svg-inline--fa fa-github fa-w-16 fa-lg" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fab fa-github fa-lg"></i> -->
+                            </span>
+                          </a>
+                        
+                        
+                      
+                      <a href="https://weibo.com/u/2378315157" target="_blank" title="weibo">
+                          <span class="icon is-large has-text-grey-darker">
+                            <svg class="svg-inline--fa fa-weibo fa-w-16 fa-lg" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="weibo" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M407 177.6c7.6-24-13.4-46.8-37.4-41.7-22 4.8-28.8-28.1-7.1-32.8 50.1-10.9 92.3 37.1 76.5 84.8-6.8 21.2-38.8 10.8-32-10.3zM214.8 446.7C108.5 446.7 0 395.3 0 310.4c0-44.3 28-95.4 76.3-143.7C176 67 279.5 65.8 249.9 161c-4 13.1 12.3 5.7 12.3 6 79.5-33.6 140.5-16.8 114 51.4-3.7 9.4 1.1 10.9 8.3 13.1 135.7 42.3 34.8 215.2-169.7 215.2zm143.7-146.3c-5.4-55.7-78.5-94-163.4-85.7-84.8 8.6-148.8 60.3-143.4 116s78.5 94 163.4 85.7c84.8-8.6 148.8-60.3 143.4-116zM347.9 35.1c-25.9 5.6-16.8 43.7 8.3 38.3 72.3-15.2 134.8 52.8 111.7 124-7.4 24.2 29.1 37 37.4 12 31.9-99.8-55.1-195.9-157.4-174.3zm-78.5 311c-17.1 38.8-66.8 60-109.1 46.3-40.8-13.1-58-53.4-40.3-89.7 17.7-35.4 63.1-55.4 103.4-45.1 42 10.8 63.1 50.2 46 88.5zm-86.3-30c-12.9-5.4-30 .3-38 12.9-8.3 12.9-4.3 28 8.6 34 13.1 6 30.8.3 39.1-12.9 8-13.1 3.7-28.3-9.7-34zm32.6-13.4c-5.1-1.7-11.4.6-14.3 5.4-2.9 5.1-1.4 10.6 3.7 12.9 5.1 2 11.7-.3 14.6-5.4 2.8-5.2 1.1-10.9-4-12.9z"></path></svg><!-- <i class="fab fa-weibo fa-lg"></i> -->
+                          </span>
+                      </a>
+                      
+                      <a href="atom.xml" target="_blank" title="RSS">
+                          <span class="icon is-large has-text-black-bis">
+                              <svg class="svg-inline--fa fa-rss fa-w-14 fa-lg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="rss" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M128.081 415.959c0 35.369-28.672 64.041-64.041 64.041S0 451.328 0 415.959s28.672-64.041 64.041-64.041 64.04 28.673 64.04 64.041zm175.66 47.25c-8.354-154.6-132.185-278.587-286.95-286.95C7.656 175.765 0 183.105 0 192.253v48.069c0 8.415 6.49 15.472 14.887 16.018 111.832 7.284 201.473 96.702 208.772 208.772.547 8.397 7.604 14.887 16.018 14.887h48.069c9.149.001 16.489-7.655 15.995-16.79zm144.249.288C439.596 229.677 251.465 40.445 16.503 32.01 7.473 31.686 0 38.981 0 48.016v48.068c0 8.625 6.835 15.645 15.453 15.999 191.179 7.839 344.627 161.316 352.465 352.465.353 8.618 7.373 15.453 15.999 15.453h48.068c9.034-.001 16.329-7.474 16.005-16.504z"></path></svg><!-- <i class="fas fa-rss fa-lg"></i> -->
+                          </span>
+                      </a>
+                    </div>
+                    <!--buttons end-->
+
+                  </div>
+                </div>
+                </div>
+              </div>
+            </nav>
+      </div>
+
+ <div class="hero-body ct-body"></div>
+      
+    </section>
+    <section class="ct-body">
+      <div class="container">
+          <div class="columns is-variable bd-klmn-columns is-4 is-centered">
+              <div class="column is-four-fifths">
+                  <div class="post-body single-content">
+                              
+                    <div class="card-image">
+                        <figure class="image">
+                          <img src="media/16613242144146/image-20211123154617195.png">
+                        </figure>
+                    </div>
+                    
+                    <h1 class="title">
+                            Kaiming He et al. - 2021 - Masked Autoencoders Are Scalable Vision Learners   
+                      </h1>
+                     
+                    
+                      <div class="media">
+                            
+                            <figure class="media-left">
+                              <p class="image is-48x48">
+                                
+                                  <img class="is-rounded" src="media/16853432384271/favicon-240x240.png">
+                                
+                              </p>
+                            </figure>
+                            
+                            <div class="media-content">
+                              <div class="content">
+                                <p>
+                                 <span class="date">2022/08/24</span>
+                                  <span class="tran-posted-in">posted in</span>&nbsp; 
+                                  
+                                      <span class="posted-in"><a href='%E7%AC%94%E8%AE%B0.html'>笔记</a></span>
+                                         
+                                  
+
+                                   
+                                      
+                                  <br />
+                                  <span class="tran-tags">Tags:</span>&nbsp;
+                                  
+                                    <a class="tag is-link is-light" href='tag_Transformer.html'>#Transformer</a>
+                                     
+
+                                </p>
+                              </div>
+                            </div>
+                         
+                    </div>
+                </div>
+                  <article class="markdown-body single-content">
+                    <h1><a id="about" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h1>
+<h3><a id="%E6%A0%87%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>标题</h3>
+<p>Masked Autoencoders Are Scalable Vision Learners</p>
+<p>掩码自动编码器：可拓展视觉学习器</p>
+<h3><a id="%E5%8F%91%E8%A1%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>发表</h3>
+<p>2021.11.11 arxiv tech report</p>
+<h3><a id="%E4%BD%9C%E8%80%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>作者</h3>
+<p>Kaiming He</p>
+<p>Xinlei Chen</p>
+<p>Saining Xie</p>
+<p>Yanghao Li</p>
+<p>Piotr Doll´ar</p>
+<p>Ross Girshick</p>
+<h3><a id="%E6%9C%BA%E6%9E%84%E7%BB%84%E7%BB%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>机构组织</h3>
+<p>Facebook AI Research</p>
+<h3><a id="%E4%BB%A3%E7%A0%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>代码</h3>
+<p>原代码：未公开</p>
+<p>复现：<a href="https://github.com/pengzhiliang/MAE-pytorch">https://github.com/pengzhiliang/MAE-pytorch</a></p>
+<h1><a id="content" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Content</h1>
+<p><img src="media/16613242144146/image-20211123154617195.png" alt="image-20211123154617195" /></p>
+<h3><a id="%E9%A2%84%E5%A4%84%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>预处理</h3>
+<p>带有位置信息的随机掩码patches</p>
+<h3><a id="%E7%BC%96%E7%A0%81%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>编码器</h3>
+<p>除去掩码部分的patches输入到encoder中，提取特征</p>
+<h3><a id="%E8%A7%A3%E7%A0%81%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>解码器</h3>
+<p>根据位置信息，将提取的特征与掩码合并输入解码器，还原出原图</p>
+<h1><a id="question" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Question</h1>
+<ol>
+<li>
+<p>transformer / CNN，图像和mask ratio</p>
+<p>老生重谈，transformer可以很好的获取全局特征。图像是具有真实世界存在的自然信号，有很强的空间(信息)冗余：一张照片遮住很多内容，也可以从其他部分判断出原图大概是什么样子；或者让你形容一下刚看过的一个人的穿着，脑海中不可能出现非常具体的细节，而只有大致的样子。</p>
+</li>
+<li>
+<p>为什么要用掩码mask？</p>
+<p>自监督方法训练预训练模型，之前的做法都是精心设计一个无标签的pre-task，然后获得预训练的特征提取模型，来完成下游任务。</p>
+<p>mask是指移除一部分信息来学习预测消失的内容，来训练具有泛化能力的预训练模型。</p>
+<p>最早是出现在NLP的BERT中，这种方法训练模型更接近自监督的本质。</p>
+<p>本文的高mask ratio可以做到一石二鸟（强预训练模型和快训练）</p>
+</li>
+<li>
+<p>ssl  handcrafted  pretext  tasks 种类</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>intra-image</p>
+<ul>
+<li>colorization</li>
+<li>jigsaw puzzle</li>
+</ul>
+</li>
+<li>
+<p>inter-image</p>
+<ul>
+<li>contrastive learning</li>
+</ul>
+</li>
+<li>
+<p>recover</p>
+<ul>
+<li>合成鉴别descriminating synthetic artifacts</li>
+<li>着色colorization</li>
+<li>图像补全image inpainting</li>
+<li>降噪编码denoising auto-encoders</li>
+</ul>
+</li>
+<li>
+<p>generate labels</p>
+<ul>
+<li>寻找两个patch的关系predicting relation of two patches</li>
+<li>拼图solving jigsaw puzzles，</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li>
+<p>下游任务</p>
+<p>MAE的decodeer是可以根据需求随便改动的。本文的下游任务是reconstruct，训练和验证都用了。文章也做了物体检测和语义分割的下游实验，效果都比之前的BEiT效果好或者持平（但是MAE训练更快）。但是没有用预训练模型做聚类（做了线形回归linear probing）。</p>
+</li>
+<li>
+<p>本文的surprise</p>
+<p>1）简单高效的模型，给BEiT做减法，反而得到了更好的效果</p>
+<p>2）超大的mask ratio，甚至连人都很能还原图像。这涉及到图像信息&amp;回归的知识</p>
+<p>3）没有使用最近热门的对抗学习 contrative learning，而是回到了generative learning</p>
+<p>4）<del>看了别人的评价说，推进了 NLP和CV模型的统一，不了解NLP不予评价</del></p>
+</li>
+<li>
+<p>本文模型可改进的地方</p>
+<blockquote>
+<p>知乎：“ 预训练的过程应该可以进一步优化吧，可以尝试一下课程学习，mask 的比例从小慢慢增大，感觉应该能减少一些预训练时间（类似 BERT 先训长为 128 的片段再训 512 一样）？”</p>
+</blockquote>
+<p>感觉有些合理 但是违背了文章的初衷（大mask快又好）不知道会不会得到更好的效果</p>
+</li>
+<li>
+<p>高度抽象出的预训练模型提出的特征丢失了细节，适合用在时装风格分类下游任务上吗？</p>
+<p>不像ViT每层都是不同粒度的特征，丢失75%信息得到的高度抽象的特征，虽然linear probing很高，但是可以直接用于风格分类吗，或者一眼看出什么风格的区别是合理的吗</p>
+<blockquote>
+<p><strong>“Jigsaw Clustering for Unsupervised Visual Representation Learning” 无监督的特征学习for聚类</strong></p>
+</blockquote>
+</li>
+</ol>
+
+                  </article>
+                  <div class="comments-wrap">
+                    <div class="share-comments">
+                      
+
+                      
+
+                      
+                    </div>
+                  </div><!-- end comments wrap -->
+              </div>
+            </div><!-- end columns -->
+      </div><!-- end container -->
+    </section>
+
+
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+          <p>
+              Copyright &copy; 2019
+              Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+              Theme used <a target="_blank" href="https://bulma.io/">Bulma CSS</a>.
+          </p>
+        </div>
+      </footer>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+
+
+
+
+  </body>
+</html>
