@@ -4,13 +4,110 @@
   <title><![CDATA[原子集]]></title>
   <link href="https://costinyuan.com/atom.xml" rel="self"/>
   <link href="https://costinyuan.com/"/>
-  <updated>2023-06-05T16:18:49+08:00</updated>
+  <updated>2023-07-05T18:55:24+08:00</updated>
   <id>https://costinyuan.com/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[群晖D224+ Jellyfin安装与QC远程访问]]></title>
+    <link href="https://costinyuan.com/17180219141909.html"/>
+    <updated>2024-06-10T20:18:34+08:00</updated>
+    <id>https://costinyuan.com/17180219141909.html</id>
+    <content type="html"><![CDATA[
+<h2><a id="%E5%AE%89%E8%A3%85jellyfin" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装 jellyfin</h2>
+<ol>
+<li>
+<p>首先要准备好一个空的共享文件夹，为后面做准备<br />
+<img src="media/17180219141909/17180226949981.jpg" alt="" /></p>
+</li>
+<li>
+<p>设置存放数据的文件夹的权限（忘了怎么设置的了，不设置的话）<br />
+<img src="media/17180219141909/17180228437623.jpg" alt="" /></p>
+</li>
+<li>
+<p>首先下载好群晖的套件 Container Manager 用于下载和安装镜像文件</p>
+</li>
+<li>
+<p>在注册表中搜索镜像 <code>nyanmisaka/jellyfin</code> （nyanmisaka是jellyfin的开发成员之一，此版本的镜像队支持硬解码和中文字幕）</p>
+</li>
+<li>
+<p>创建容器并设置部分参数（初始化没让设置的可以后面停止设置）</p>
+<blockquote>
+<p>启动自动重启</p>
+</blockquote>
+<p><img src="media/17180219141909/17180221751803.jpg" alt="" /></p>
+<blockquote>
+<p>必须设置cache和config映射文件夹</p>
+</blockquote>
+<p><img src="media/17180219141909/17180221861155.jpg" alt="" /></p>
+<blockquote>
+<p>环境中添加一个DEVICES变量“/dev/dri/renderD128”（硬解需要）</p>
+</blockquote>
+<p><img src="media/17180219141909/17180223581311.jpg" alt="" /></p>
+</li>
+<li>
+<p>启动容器，从设置好的端口号访问进入</p>
+</li>
+</ol>
+<h2><a id="%E8%AE%BE%E7%BD%AEjellyfin" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>设置 jellyfin</h2>
+<h3><a id="%E6%B7%BB%E5%8A%A0%E5%AA%92%E4%BD%93%E5%BA%93" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>添加媒体库</h3>
+<p>右上角小人-&gt;控制台-&gt;媒体库，添加媒体库，最好电影和电视剧分开放</p>
+<p><img src="media/17180219141909/17180236769617.jpg" alt="" /><br />
+<img src="media/17180219141909/17180236958971.jpg" alt="" /><br />
+<img src="media/17180219141909/17180237128849.jpg" alt="" /><br />
+<img src="media/17180219141909/17180237254407.jpg" alt="" /></p>
+<h3><a id="%E8%AE%BE%E7%BD%AE%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>设置硬件加速</h3>
+<p>在控制台-&gt;播放中，设置如下（不要勾选低电压，解码会出现失败的情况）<br />
+<img src="media/17180219141909/17180234126156.jpg" alt="" /></p>
+<p>色调映射可以让HDR转成SDR后不那么灰色，选择Reinhard效果较好<br />
+<img src="media/17180219141909/17180234561550.jpg" alt="" /></p>
+<p>其他都可以默认，然后保存</p>
+<h2><a id="%E8%AE%BE%E7%BD%AEqc%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE-jellyfin" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>设置QC远程访问 jellyfin</h2>
+<p>由于没有公网ip所以只能用群晖的QuickConnect进行远程访问</p>
+<ol>
+<li>
+<p>首先打开群晖的ssh（在控制面板-&gt;终端机/SNMP）</p>
+</li>
+<li>
+<p>用电脑自带的命令行工具进行连接</p>
+<pre><code class="language-plain_text">ssh 用户名@192.168.x.x
+</code></pre>
+</li>
+<li>
+<p>在群晖的nginx里加入一个jellyfin的服务</p>
+<pre><code class="language-plain_text">cd /usr/syno/share/nginx/conf.d/
+</code></pre>
+<pre><code class="language-plain_text">sudo vim dsm.jellyfin.conf
+</code></pre>
+<p>sudo密码就是用户密码，按i进行输入</p>
+<pre><code class="language-plain_text">location ^~ /jellyfin/ {
+proxy_pass      http://localhost:8096;
+}
+</code></pre>
+<p>按esc后输入<code>:wq</code>保存退出</p>
+</li>
+<li>
+<p>最后重启一下nginx服务</p>
+<pre><code class="language-plain_text">sudo systemctl restart nginx
+</code></pre>
+</li>
+<li>
+<p>在jellyfin里设置一下url</p>
+<p>控制台-&gt;联网-&gt;基础URL： <code>/jellyfin</code></p>
+</li>
+<li>
+<p>然后就可以远程通过 https://*.quickconnect.cn/jellyfin 访问了</p>
+</li>
+</ol>
+<h2><a id="infuse%E4%B8%8A%E6%8C%82%E8%BD%BD-jellyfin" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>infuse 上挂载 jellyfin</h2>
+<p>（还在研究中～）</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Sahak et al. - 2023 - Denoising Diffusion Probabilistic Models for Robust Image Super-Resolution in the Wild]]></title>
@@ -1389,57 +1486,6 @@ done
 <p>提出了一个基于时尚的多模态深度学习模型--双模态相关深度自动编码器（BCDA），与回归相连接，以实现将视觉特征映射到FSS的任务。具体来说，利用多模态策略学到的共享表征，BCDA可以充分利用上衣和下装之间的内部关联，并解决服装搭配的问题。</p>
 </li>
 </ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[从健身房到Switch——疫情下的日常健身]]></title>
-    <link href="https://costinyuan.com/16293554956534.html"/>
-    <updated>2021-08-19T14:44:55+08:00</updated>
-    <id>https://costinyuan.com/16293554956534.html</id>
-    <content type="html"><![CDATA[
-<blockquote>
-<p>前言</p>
-</blockquote>
-<p>本人有一年健身史，请过私教。后因为学习工作原因停止了一年，现在闲下来后，身材早已走样，还总感觉身上不舒服，于是又开始恢复日常运动。主要是使用switch平台和keep上的免费课程。</p>
-<h2><a id="%E4%B8%AA%E4%BA%BA%E8%AE%BE%E5%A4%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>个人设备</h2>
-<ul>
-<li>iPhone XS：安装有 Keep 软件，连接体脂秤记录体重</li>
-<li>小米手环4：之前去健身房会用，现在在家运动几乎不用，成了公交卡</li>
-<li>Nintendo Switch：主要设备，家里唯一的游戏主机，有《舞力全开2021》、《有氧拳击2 demo》、《健身环大冒险》</li>
-<li>Dell U2720Q显示器：戴尔4k显示器，有90w c口供电连接我的MacBook和switch游戏主机</li>
-<li>小米电视：不知道啥型号，1080p分辨率，非常适合连switch，但是不能独享，下有keep软件</li>
-</ul>
-<h2><a id="%E5%81%A5%E8%BA%AB%E6%88%BF" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>健身房</h2>
-<p><strong>结论</strong>：健身房可以说是最适合<strong>塑形增肌</strong>的地方了，买课的话适合初学者，不然还是要有一定健身基础。</p>
-<p>第一次进健身房就是冲着办卡的哈哈哈，上了一次体验课果断充值20节课（后来感觉买多了）。私教会帮忙制定训练计划，提供器械和动作指导以及饮食建议。因为当时比较瘦，所以配合蛋白粉增加营养摄入。</p>
-<p>一周3-4练，训练半年后身材变化还是很明显的，基本的轮廓都出来了，中期发现蛋白粉效果不显著，换了碳水含量更高的增肌粉，整个人壮了一圈。效果还是很满意的，就是课买多了。到了后期自己根据视频网站里的一些大佬们的视频自己制定计划，建议买课买14节差不多了。</p>
-<p>因为有教练带，所以只使用了小米手环，打开小米手环的自由训练模式，可以记录心率，消耗的卡路里等，看看就好哈哈。</p>
-<h2><a id="keep" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Keep</h2>
-<p><strong>结论</strong>：keep的课程其实都蛮好的，只需要一台手机/电视，和一个瑜伽垫就行了。对于<strong>塑形减脂</strong>有一定效果，适合有初学者和有一定基础的人。</p>
-<p>我上过keep上的HIIT燃脂、腹肌撕裂者、徒手胸肌训练、家庭增肌特训等课程。课程分为初级、中级、高级，一节课的时间在10-30分钟不等。我一般做初级或者中级的课程，高级实在是太累了，没办法坚持到结束。</p>
-<p>之前没时间去健身房的时候会用keep，根据自己想要练的部位或者环境选择课程，做完第二天会感觉酸痛，但是效果和健身房相比还是差不少。我现在喜欢使用keep的尊巴课程和户外跑课程。</p>
-<h2><a id="nintendo-switch" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Nintendo Switch</h2>
-<p>我在2020年2月初购入港版switch，同时购入了数字版的《舞力全开 2020》。玩了几个月累计40多小时吧（因为下了2021把2020删了，没有了记录），感觉还不错，2020年黑五入了《舞力全开2021》2021年初老任出了《有氧拳击2》，我下载的demo试玩了三天。同时在pdd花了500r购入了《健身环大冒险》。</p>
-<h3><a id="%E3%80%8A%E8%88%9E%E5%8A%9B%E5%85%A8%E5%BC%80%E3%80%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>《舞力全开》</h3>
-<p><strong>感受</strong>：如果喜欢音乐，没事喜欢跟着晃两下，那么不要错过育碧家的年货产品《舞力全开》。（个人对2021的歌单不太感冒，虽然买了，但玩的动力不大，可能要看看歌单有没有很多熟悉的喜欢的歌吧。）我买的都是数字版，并都领取了一个月的unlimited会员，可以体验到除了本年度歌曲外之前版本的所有歌曲和本年度的会员歌曲。</p>
-<p><strong>体验</strong>：开始喜欢玩世界舞台（需加速器联网），但是发现里面只有今年的歌曲，而且两场中间的休息时间太长了，于是后来都玩歌单。歌单每天会刷新，时长为20-40分钟不等，我一般选30min+的。通过开启甩汗模式，看到消耗的卡路里大概在100-250之间。（后来感觉这个不太准，高了许多的样子。并未实际测试。）</p>
-<p><strong>结论</strong>：其实舞力全开算是很好坚持的了，游戏中不会累到无法坚持，第二天也不会有什么疼痛感。一段时间后，体重减少，明显看着比以前瘦了很多，效果较好。但是不会增加什么肌肉，所以同期需要控制饮食。</p>
-<h3><a id="%E3%80%8A%E6%9C%89%E6%B0%A7%E6%8B%B3%E5%87%BB2%E3%80%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>《有氧拳击2》</h3>
-<p><strong>感受</strong>：之前有看到过《有氧拳击》的截图，感觉像是上个世纪魂斗罗后出来的游戏，画质不太好的亚子。2021年，老任推出了“全新”的《有氧拳击2》，并提供demo试玩。我就跑去试了试。短短三天的体验，竟让我对《有氧拳击2》的喜爱超过了《舞力全开2021》。虽说是“无实物表演”没有拳拳到肉的感觉，但那种想着punch那些让自己的不爽的人和事，着实让人越打越上头，能限制你发挥的也只有你的体能了（还有废话特别多的“教练”）。等折扣了可以入一个数字版。</p>
-<p><strong>体验</strong>：《有氧拳击2》进入游戏必须要进行每日打卡，新动作会在训练前进行教学，游戏模式类似体运动版的太鼓达人。自由运动中可以选择动作组合、运动强度和歌曲。一套组合的强烈运动模式下时间为10min+，如果是购入了正式版，可以选择多套组合组成训练。训练结束后会显示本次训练的有关信息，比如准确率，挥拳次数，消耗的热量，时间等。但是我也没太关注这些，打着爽就vans了。ps.训练中完成的成就可以换券给教练们换新衣服......</p>
-<p><strong>结论</strong>：有氧拳击2的画面提神比较大，但是换汤不换药，内容只是对一代的完善。不像舞力全开要提醒自己去打开运动，拳击2会让人盼望着去打开switch挥拳（笔者的生活是有多不顺啊），运动20多分钟会明显感觉有些累了，第二天睡醒会感到上肢肌肉酸痛。感觉比较适合想要塑形的人，如果想要减脂，可能需要更长时间的运动。</p>
-<h3><a id="%E3%80%8A%E5%81%A5%E8%BA%AB%E7%8E%AF%E5%A4%A7%E5%86%92%E9%99%A9%E3%80%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>《健身环大冒险》</h3>
-<p><strong>感受</strong>：去年由于疫情而炒起来的居家隔离神器，时隔一年终于恢复的正常的价格。到写本文时已经玩了4天了。感觉到目前为止，驱使我运动的还是新鲜感和那个放哪都很显眼的环......因为游戏过程实在是痛苦，不亚于去健身房撸铁，虽然这破塑料环还不能给你带来那种冰冷的钢铁触感，但是它就是有那种折磨你的能力。无论我再怎么抬起双腿，他还是在那慢慢蹦蹦跳跳？为什么这个游戏里任务的名字都这么奇怪？为什么运动能打人？习惯了这些诡异的设定，这还是款很值得购入的游戏。</p>
-<p><strong>体验</strong>：确认过一些个人信息以及运动能力后就可以进入冒险世界了。每次冒险的前都会有一段热身运动（我第一进行热身就把我累到了...），每个关卡由跑路、收集金币、打怪、奇怪剧情组成。主要花时间的还是打怪，那些奇怪的怪物血量出奇的厚，要选2-3个运动才能打到一个怪物，boss关的话会更多。跑步时间较短，如果喜欢跑步可以选跑步模式（如果不像太大动静可以把跑步换成微微下蹲）。运动有针对不同部位的高频锻炼，也有比较温和的瑜伽动作，会有动画提示和文字提示，动作的次数是根据最开始的运动能力测试给出的，第二天开始每次运动前会问是否要调整运动强度，也可以直接在设置里更改。（选择了动作以后似乎不能取消，休息一下后要含着泪做完），每完成一个关卡可以检测心率看运动强度。结束一天的训练后会有肌肉拉伸和每日的健康小知识。</p>
-<p><strong>结论</strong>：健身环大冒险的运动强度比较高，练完第二天必然浑身痛，可以时间久了会好些。适合有一定基础的人，初学者建议把强度调低一些以便坚持。健身环大冒险提供了一套完整的健身训练，从热身、运动、放松，其中穿插着的小提示和健康小知识，可以看出游戏还是十分用心的。半个小时多的运动（游戏内运动时间大概不到20分钟），可以满足一天的运动量。虽然每天身上都痛，但是对于锻炼肌肉、加强线条效果显著，提高肌肉含量可以提高代谢水平，让人不易发胖。（健身环大冒险会有很多腿部运动...深蹲100次可以获得“深蹲战士”的称号）。</p>
-<h2><a id="%E6%80%BB%E7%BB%93" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>总结</h2>
-<p>如果有时间并有良好的健身习惯，健身房是最好的选择，无论对增肌减脂都很好。</p>
-<p>keep适合没有太多时间的初学者进行健身学习和提升运动能力。</p>
-<p>switch的三款游戏各有特点，可以根据自己的情况和需求选择，也可以组合几款游戏一起使用。</p>
-<p>没事就运动一下，无论是对自己的身材还是健康都是有好处的。作为肥宅，我自己也不喜欢设置什么目标，但是不运动看看自己身上的肉又感觉很不爽，最后选择了switch作为我在现疫情时代的健身工具。</p>
-<p>以上是我作为非专业人士对健身房、软件、健身游戏的使用体验和感受。</p>
 
 ]]></content>
   </entry>
