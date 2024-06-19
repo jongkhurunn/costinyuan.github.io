@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
       
-    群晖D224+ Jellyfin安装与QC远程访问 - 原子集
+    群晖DS224+ TinyMediaManager(tmm)docker部署 - 原子集
     
     </title>
     <link rel="shortcut icon" href="media/16853432384271/facicon-64x64.png" type="image/png" />
@@ -89,7 +89,7 @@
                   <div class="post-body single-content">
                     
                     <h1 class="title">
-                            群晖D224+ Jellyfin安装与QC远程访问   
+                            群晖DS224+ TinyMediaManager(tmm)docker部署   
                       </h1>
                      
                     
@@ -106,7 +106,7 @@
                             <div class="media-content">
                               <div class="content">
                                 <p>
-                                 <span class="date">2024/06/10</span>
+                                 <span class="date">2024/06/19</span>
                                   <span class="tran-posted-in">posted in</span>&nbsp; 
                                   
                                       <span class="posted-in"><a href='%E6%96%87%E7%AB%A0.html'>文章</a></span>
@@ -117,8 +117,6 @@
                                       
                                   <br />
                                   <span class="tran-tags">Tags:</span>&nbsp;
-                                  
-                                    <a class="tag is-link is-light" href='tag_%E7%BE%A4%E6%99%96.html'>#群晖</a>
                                      
 
                                 </p>
@@ -128,96 +126,33 @@
                     </div>
                 </div>
                   <article class="markdown-body single-content">
-                    <h2><a id="%E5%AE%89%E8%A3%85jellyfin" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装 jellyfin</h2>
-<ol>
-<li>
-<p>首先要准备好一个空的共享文件夹，为后面做准备<br />
-<img src="media/17180219141909/17180226949981.jpg" alt="" /></p>
-</li>
-<li>
-<p>设置存放数据的文件夹的权限（忘了怎么设置的了，不设置的话）<br />
-<img src="media/17180219141909/17180228437623.jpg" alt="" /></p>
-</li>
-<li>
-<p>首先下载好群晖的套件 Container Manager 用于下载和安装镜像文件</p>
-</li>
-<li>
-<p>在注册表中搜索镜像 <code>nyanmisaka/jellyfin</code> （nyanmisaka是jellyfin的开发成员之一，此版本的镜像队支持硬解码和中文字幕）</p>
-</li>
-<li>
-<p>创建容器并设置部分参数（初始化没让设置的可以后面停止设置）</p>
-<blockquote>
-<p>启动自动重启</p>
-</blockquote>
-<p><img src="media/17180219141909/17180221751803.jpg" alt="" /></p>
-<blockquote>
-<p>必须设置cache和config映射文件夹</p>
-</blockquote>
-<p><img src="media/17180219141909/17180221861155.jpg" alt="" /></p>
-<blockquote>
-<p>环境中添加一个DEVICES变量“/dev/dri/renderD128”（硬解需要）</p>
-</blockquote>
-<p><img src="media/17180219141909/17180223581311.jpg" alt="" /></p>
-</li>
-<li>
-<p>启动容器，从设置好的端口号访问进入</p>
-</li>
-</ol>
-<h2><a id="%E8%AE%BE%E7%BD%AEjellyfin" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>设置 jellyfin</h2>
-<h3><a id="%E6%B7%BB%E5%8A%A0%E5%AA%92%E4%BD%93%E5%BA%93" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>添加媒体库</h3>
-<p>右上角小人-&gt;控制台-&gt;媒体库，添加媒体库，最好电影和电视剧分开放</p>
-<p><img src="media/17180219141909/17180236769617.jpg" alt="" /><br />
-<img src="media/17180219141909/17180236958971.jpg" alt="" /><br />
-<img src="media/17180219141909/17180237128849.jpg" alt="" /><br />
-<img src="media/17180219141909/17180237254407.jpg" alt="" /></p>
-<h3><a id="%E8%AE%BE%E7%BD%AE%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>设置硬件加速</h3>
-<p>在控制台-&gt;播放中，设置如下：</p>
-<p>需要根据自己的cpu型号确定可以编解码的类型进行勾选，12代以上的intel cpu需要开启低电压模式<br />
-<img src="media/17180219141909/17180801881673.jpg" alt="" /></p>
-<p>色调映射可以让HDR转成SDR后不那么灰色，选择Reinhard效果较好<br />
-<img src="media/17180219141909/17180234561550.jpg" alt="" /></p>
-<p>其他都可以默认，然后保存</p>
-<h2><a id="%E8%AE%BE%E7%BD%AEqc%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE-jellyfin" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>设置QC远程访问 jellyfin</h2>
-<p>由于没有公网ip所以只能用群晖的QuickConnect进行远程访问</p>
-<ol>
-<li>
-<p>首先打开群晖的ssh（在控制面板-&gt;终端机/SNMP）</p>
-</li>
-<li>
-<p>用电脑自带的命令行工具进行连接</p>
-<pre><code class="language-plain_text">ssh 用户名@192.168.x.x
+                    <p>参考文章：<br />
+<a href="https://zhuanlan.zhihu.com/p/698673426">https://zhuanlan.zhihu.com/p/698673426</a><br />
+<a href="https://zhuanlan.zhihu.com/p/587723681">https://zhuanlan.zhihu.com/p/587723681</a></p>
+<h2><a id="%E6%8B%89%E5%8F%96%E9%95%9C%E5%83%8F" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>拉取镜像</h2>
+<p>直接在docker的注册表里搜索'tinymediamanager/tinymediamanager'，是官方的镜像，下载latest版本就行了</p>
+<h2><a id="%E5%AE%B9%E5%99%A8%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>容器配置</h2>
+<p><img src="media/17187694597253/17187696325331.jpg" alt="" /><br />
+<img src="media/17187694597253/17187696496767.jpg" alt="" /></p>
+<h3><a id="%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E7%9A%84%E9%97%AE%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>简体中文乱码的问题</h3>
+<p>通过ssh进入容器的终端</p>
+<pre><code class="language-sh">docker exec -it &lt;container_id_or_name&gt; /bin/bash
 </code></pre>
-</li>
-<li>
-<p>在群晖的nginx里加入一个jellyfin的服务</p>
-<pre><code class="language-plain_text">cd /usr/syno/share/nginx/conf.d/
+<p>安装配置基础镜像（debain 12）中的中文</p>
+<pre><code class="language-sh">apt-get install locales
+dpkg-reconfigure locales
 </code></pre>
-<pre><code class="language-plain_text">sudo vim dsm.jellyfin.conf
+<p>出现很多语言，回车显示所有的内容，然后输入'314'（就是zh_CN.UTF-8），然后选'3'，重启容器</p>
+<p><img src="media/17187694597253/17187699313214.jpg" alt="" /></p>
+<h3><a id="themoviedb%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>themoviedb连接问题</h3>
+<p>最方便的是用软路由，不然就在创建的时候用命令行指定host</p>
+<pre><code class="language-sh">docker run \    
+--name=tinymediamanager \    
+--add-host=api.themoviedb.org:52.84.18.87 \   
+--add-host=image.tmdb.org:84.17.46.53 \    
+--add-host=www.themoviedb.org:52.84.125.129 \
+dzhuang/tinymediamanager:latest
 </code></pre>
-<p>sudo密码就是用户密码，按i进行输入</p>
-<pre><code class="language-plain_text">location ^~ /jellyfin/ {
-proxy_pass      http://localhost:8096;
-}
-</code></pre>
-<p>按esc后输入<code>:wq</code>保存退出</p>
-</li>
-<li>
-<p>最后重启一下nginx服务</p>
-<pre><code class="language-plain_text">sudo systemctl restart nginx
-</code></pre>
-</li>
-<li>
-<p>在jellyfin里设置一下url</p>
-<p>控制台-&gt;联网-&gt;基础URL： <code>/jellyfin</code></p>
-</li>
-<li>
-<p>然后就可以远程通过 https://*.quickconnect.cn/jellyfin 访问了</p>
-</li>
-</ol>
-<h2><a id="infuse%E4%B8%8A%E6%8C%82%E8%BD%BDjellyfin" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>infuse上挂载jellyfin</h2>
-<p>由于没有公网，所以只能使用内网IP进行连接（有公网可以替换公网IP）</p>
-<p><img src="media/17180219141909/17186219767136.jpg" alt="" /></p>
-<h2><a id="kodi%E5%AE%89%E8%A3%85jellyfin%E6%8F%92%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>kodi安装jellyfin插件</h2>
 
                   </article>
                   <div class="comments-wrap">

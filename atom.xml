@@ -4,13 +4,50 @@
   <title><![CDATA[原子集]]></title>
   <link href="https://costinyuan.com/atom.xml" rel="self"/>
   <link href="https://costinyuan.com/"/>
-  <updated>2024-06-16T22:44:13+08:00</updated>
+  <updated>2024-06-17T18:57:21+08:00</updated>
   <id>https://costinyuan.com/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[群晖DS224+ TinyMediaManager(tmm)docker部署]]></title>
+    <link href="https://costinyuan.com/17187694597253.html"/>
+    <updated>2024-06-19T11:57:39+08:00</updated>
+    <id>https://costinyuan.com/17187694597253.html</id>
+    <content type="html"><![CDATA[
+<p>参考文章：<br />
+<a href="https://zhuanlan.zhihu.com/p/698673426">https://zhuanlan.zhihu.com/p/698673426</a><br />
+<a href="https://zhuanlan.zhihu.com/p/587723681">https://zhuanlan.zhihu.com/p/587723681</a></p>
+<h2><a id="%E6%8B%89%E5%8F%96%E9%95%9C%E5%83%8F" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>拉取镜像</h2>
+<p>直接在docker的注册表里搜索'tinymediamanager/tinymediamanager'，是官方的镜像，下载latest版本就行了</p>
+<h2><a id="%E5%AE%B9%E5%99%A8%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>容器配置</h2>
+<p><img src="media/17187694597253/17187696325331.jpg" alt="" /><br />
+<img src="media/17187694597253/17187696496767.jpg" alt="" /></p>
+<h3><a id="%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E7%9A%84%E9%97%AE%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>简体中文乱码的问题</h3>
+<p>通过ssh进入容器的终端</p>
+<pre><code class="language-sh">docker exec -it &lt;container_id_or_name&gt; /bin/bash
+</code></pre>
+<p>安装配置基础镜像（debain 12）中的中文</p>
+<pre><code class="language-sh">apt-get install locales
+dpkg-reconfigure locales
+</code></pre>
+<p>出现很多语言，回车显示所有的内容，然后输入'314'（就是zh_CN.UTF-8），然后选'3'，重启容器</p>
+<p><img src="media/17187694597253/17187699313214.jpg" alt="" /></p>
+<h3><a id="themoviedb%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>themoviedb连接问题</h3>
+<p>最方便的是用软路由，不然就在创建的时候用命令行指定host</p>
+<pre><code class="language-sh">docker run \    
+--name=tinymediamanager \    
+--add-host=api.themoviedb.org:52.84.18.87 \   
+--add-host=image.tmdb.org:84.17.46.53 \    
+--add-host=www.themoviedb.org:52.84.125.129 \
+dzhuang/tinymediamanager:latest
+</code></pre>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[群晖D224+ Jellyfin安装与QC远程访问]]></title>
@@ -104,8 +141,10 @@ proxy_pass      http://localhost:8096;
 <p>然后就可以远程通过 https://*.quickconnect.cn/jellyfin 访问了</p>
 </li>
 </ol>
-<h2><a id="infuse%E4%B8%8A%E6%8C%82%E8%BD%BD-jellyfin" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>infuse 上挂载 jellyfin</h2>
-<p>（还在研究中～）</p>
+<h2><a id="infuse%E4%B8%8A%E6%8C%82%E8%BD%BDjellyfin" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>infuse上挂载jellyfin</h2>
+<p>由于没有公网，所以只能使用内网IP进行连接（有公网可以替换公网IP）</p>
+<p><img src="media/17180219141909/17186219767136.jpg" alt="" /></p>
+<h2><a id="kodi%E5%AE%89%E8%A3%85jellyfin%E6%8F%92%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>kodi安装jellyfin插件</h2>
 
 ]]></content>
   </entry>
