@@ -4,7 +4,7 @@
   <title><![CDATA[原子集]]></title>
   <link href="https://costinyuan.com/atom.xml" rel="self"/>
   <link href="https://costinyuan.com/"/>
-  <updated>2024-06-17T18:57:21+08:00</updated>
+  <updated>2024-06-19T12:07:56+08:00</updated>
   <id>https://costinyuan.com/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -55,6 +55,9 @@ dzhuang/tinymediamanager:latest
     <updated>2024-06-10T20:18:34+08:00</updated>
     <id>https://costinyuan.com/17180219141909.html</id>
     <content type="html"><![CDATA[
+<p>参考文章：<br />
+<a href="https://blog.csdn.net/u013005016/article/details/128997711">https://blog.csdn.net/u013005016/article/details/128997711</a><br />
+<a href="https://jellyfin.org/docs/general/clients/kodi/#jellycon">https://jellyfin.org/docs/general/clients/kodi/#jellycon</a></p>
 <h2><a id="%E5%AE%89%E8%A3%85jellyfin" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装 jellyfin</h2>
 <ol>
 <li>
@@ -144,7 +147,21 @@ proxy_pass      http://localhost:8096;
 <h2><a id="infuse%E4%B8%8A%E6%8C%82%E8%BD%BDjellyfin" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>infuse上挂载jellyfin</h2>
 <p>由于没有公网，所以只能使用内网IP进行连接（有公网可以替换公网IP）</p>
 <p><img src="media/17180219141909/17186219767136.jpg" alt="" /></p>
-<h2><a id="kodi%E5%AE%89%E8%A3%85jellyfin%E6%8F%92%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>kodi安装jellyfin插件</h2>
+<h2><a id="kodi%E5%AE%89%E8%A3%85jellyfin%E6%8F%92%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Kodi安装Jellyfin插件</h2>
+<p>安卓电视上没有infuse这种软件，所以用了开源的Kodi。也试了jellyfin-tv，但是播放总是有问题，还不如直接DLNA哈哈哈。Kodi的话是用jellyfin的插件库，有两种插件:'Jellyfin for Kodi'和'Jellycon'。更建议安装Jellyfin for Kodi，因为能显示好看的桌面，Jellycon不如电视自带的媒体中心哈。</p>
+<h3><a id="%E5%AE%89%E8%A3%85jellyfin%E6%8F%92%E4%BB%B6%E5%BA%93" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装Jellyfin插件库</h3>
+<p>设置 - 文件管理 - 添加源 - 输入'<a href="https://kodi.jellyfin.org">https://kodi.jellyfin.org</a>' - 取名'Jellyfin Repo' - OK</p>
+<blockquote>
+<p>注意一下kodi的输入法输入':'需要先选择其他符号</p>
+</blockquote>
+<p>桌面 - 插件 - 从Zip压缩包安装 - 选择刚输入的源 - 安装'repository.jellyfin.kodi.zip'</p>
+<blockquote>
+<p>如果不能安装，需要在设置里打开允许安装第三方源</p>
+</blockquote>
+<h3><a id="%E5%AE%89%E8%A3%85jellyfin-for-kodi" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装Jellyfin for Kodi</h3>
+<p>桌面 - 插件 - 从库中安装 - 选择视频插件中的'Kodi Jellyfin Add-ons'</p>
+<h3><a id="%E9%85%8D%E7%BD%AEjellyfin-for-kodi" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>配置Jellyfin for Kodi</h3>
+<p>一般输入基础的host<code>xxx.xxx.xxx.xxx.xxx:8096</code>就行了，但是如果是配置了基础url。就需要写成<code>xxx.xxx.xxx.xxx.xxx:8096\baseurl</code>，输入服务端设置的账户密码就能观看啦</p>
 
 ]]></content>
   </entry>
